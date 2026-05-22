@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Outdoor Wood Flooring Calculator</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&f[]=boska@400,500,700&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="light"] {
+      --color-bg:#f7f6f2; --color-surface:#f9f8f5; --color-surface-2:#fbfbf9; --color-surface-offset:#f3f0ec;
+      --color-border:#d4d1ca; --color-divider:#dcd9d5; --color-text:#28251d; --color-text-muted:#7a7974;
+      --color-text-faint:#bab9b4; --color-text-inverse:#f9f8f4; --color-primary:#01696f; --color-primary-hover:#0c4e54;
+      --color-primary-highlight:#cedcd8; --color-error:#a12c7b; --shadow-sm:0 1px 2px rgba(0,0,0,.05); --shadow-md:0 12px 32px rgba(0,0,0,.08);
+      --radius-sm:.375rem; --radius-md:.5rem; --radius-lg:.75rem; --radius-xl:1rem; --space-2:.5rem; --space-3:.75rem;
+      --space-4:1rem; --space-5:1.25rem; --space-6:1.5rem; --space-8:2rem; --space-10:2.5rem; --text-xs:.75rem;
+      --text-sm:.95rem; --text-base:1rem; --text-lg:1.2rem; --text-xl:1.8rem; --font-display:'Boska', Georgia, serif; --font-body:'Satoshi', Inter, sans-serif;
+    }
+    [data-theme="dark"] {
+      --color-bg:#171614; --color-surface:#1c1b19; --color-surface-2:#201f1d; --color-surface-offset:#1d1c1a;
+      --color-border:#393836; --color-divider:#262523; --color-text:#cdccca; --color-text-muted:#979590; --color-text-faint:#6b6965;
+      --color-text-inverse:#2b2a28; --color-primary:#4f98a3; --color-primary-hover:#227f8b; --color-primary-highlight:#313b3b; --color-error:#d163a7;
+      --shadow-sm:0 1px 2px rgba(0,0,0,.25); --shadow-md:0 12px 32px rgba(0,0,0,.35);
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; min-height:100vh; font-family:var(--font-body); background:var(--color-bg); color:var(--color-text); line-height:1.5; }
+    button,input { font:inherit; }
+    .shell { max-width:1180px; margin:0 auto; padding:var(--space-6); }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:var(--space-4); margin-bottom:var(--space-8); }
+    .brand { display:flex; align-items:center; gap:var(--space-3); }
+    .logo { width:42px; height:42px; border-radius:12px; background:var(--color-surface); border:1px solid var(--color-border); display:grid; place-items:center; box-shadow:var(--shadow-sm); }
+    .brand h1 { margin:0; font-family:var(--font-display); font-size:var(--text-xl); line-height:1; font-weight:500; }
+    .brand p { margin:.3rem 0 0; color:var(--color-text-muted); font-size:var(--text-sm); }
+    .theme-toggle { min-width:44px; min-height:44px; border-radius:999px; border:1px solid var(--color-border); background:var(--color-surface); color:var(--color-text); display:grid; place-items:center; box-shadow:var(--shadow-sm); }
+    .hero { display:grid; grid-template-columns:1.2fr .8fr; gap:var(--space-6); margin-bottom:var(--space-8); }
+    .hero-card, .panel { background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-xl); box-shadow:var(--shadow-md); }
+    .hero-card { padding:var(--space-8); background:linear-gradient(180deg, var(--color-surface-2), var(--color-surface)); }
+    .hero-card h2 { margin:0 0 var(--space-4); font-family:var(--font-display); font-size:clamp(2rem, 5vw, 3.5rem); max-width:10ch; line-height:1; font-weight:500; }
+    .hero-card p { margin:0; max-width:56ch; color:var(--color-text-muted); font-size:var(--text-base); }
+    .hero-meta { display:grid; gap:var(--space-4); padding:var(--space-6); }
+    .meta-box { background:var(--color-surface-2); border:1px solid var(--color-border); border-radius:var(--radius-lg); padding:var(--space-5); }
+    .meta-box span { display:block; font-size:var(--text-xs); color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.4rem; }
+    .meta-box strong { font-size:var(--text-lg); }
+    .app-grid { display:grid; grid-template-columns:minmax(320px, 420px) 1fr; gap:var(--space-6); align-items:start; }
+    .panel { padding:var(--space-6); }
+    .panel h3 { margin:0 0 var(--space-5); font-size:var(--text-lg); }
+    .form-grid { display:grid; gap:var(--space-4); }
+    .field { display:grid; gap:.45rem; }
+    .field label { font-size:var(--text-sm); font-weight:600; }
+    .field input { min-height:48px; border-radius:var(--radius-md); border:1px solid var(--color-border); background:var(--color-surface-2); padding:0 .9rem; color:var(--color-text); }
+    .field small { color:var(--color-text-muted); font-size:var(--text-xs); }
+
+    /* 新增：數值 stepper + 手機優化 */
+    .number-inline { display:flex; align-items:center; gap:0.5rem; }
+    .number-inline button {
+      min-width:64px;
+      min-height:44px;
+      border-radius:999px;
+      border:1px solid var(--color-border);
+      background:var(--color-surface-2);
+      color:var(--color-text);
+    }
+    .number-inline input { flex:1; }
+
+    .actions { display:flex; gap:var(--space-3); margin-top:var(--space-2); flex-wrap:wrap; }
+    .btn { min-height:48px; padding:0 1rem; border-radius:999px; border:1px solid transparent; font-weight:600; }
+    .btn-primary { background:var(--color-primary); color:var(--color-text-inverse); }
+    .btn-primary:hover { background:var(--color-primary-hover); }
+    .btn-secondary { background:var(--color-surface-2); border-color:var(--color-border); color:var(--color-text); }
+    .message { min-height:24px; font-size:var(--text-sm); margin-top:var(--space-3); color:var(--color-error); }
+    .results { display:grid; gap:var(--space-5); }
+    .result-group { border:1px solid var(--color-border); border-radius:var(--radius-lg); overflow:hidden; background:var(--color-surface-2); }
+    .result-group header { padding:var(--space-4) var(--space-5); border-bottom:1px solid var(--color-divider); font-weight:700; }
+    .result-list { display:grid; }
+    .row { display:grid; grid-template-columns:1fr auto; gap:var(--space-4); padding:var(--space-4) var(--space-5); border-bottom:1px solid var(--color-divider); }
+    .row:last-child { border-bottom:none; }
+    .row span { color:var(--color-text-muted); }
+    .row strong { font-variant-numeric:tabular-nums; text-align:right; }
+    .highlight { background:var(--color-primary-highlight); }
+    .footer-note { margin-top:var(--space-5); color:var(--color-text-muted); font-size:var(--text-sm); }
+
+    @media (max-width: 960px) {
+      .hero, .app-grid { grid-template-columns:1fr; }
+      .hero-card h2 { max-width:none; }
+      .shell { padding:var(--space-4); }
+    }
+
+    @media (max-width: 768px) {
+      .app-grid { grid-template-columns:1fr; }
+      .actions { justify-content:stretch; }
+      .btn { flex:1; text-align:center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-label="Flooring calculator logo">
+            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+            <path d="M8 5v14M14 5v14M3 10h18M3 14h18"></path>
+          </svg>
+        </div>
+        <div>
+          <h1>Flooring MVP</h1>
+          <p>戶外木地板 + 龍骨材料計算器</p>
+        </div>
+      </div>
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch theme"></button>
+    </header>
+
+    <section class="hero">
+      <article class="hero-card">
+        <h2>地板數量與龍骨數量一齊計</h2>
+        <p>此版本移除損耗率輸入，集中做好 MVP 核心：按最大等分規則計地板分段、總板數、面積對比，再加上龍骨行數、龍骨總長度與所需龍骨支數。</p>
+      </article>
+      <aside class="hero-meta panel">
+        <div class="meta-box"><span>核心規則</span><strong>全部向上取整</strong></div>
+        <div class="meta-box"><span>新增 section</span><strong>龍骨數量計算</strong></div>
+        <div class="meta-box"><span>驗算</span><strong>面積 + 龍骨總長度</strong></div>
+      </aside>
+    </section>
+
+    <main class="app-grid">
+      <section class="panel" aria-labelledby="input-title">
+        <h3 id="input-title">輸入資料</h3>
+        <form id="calcForm" class="form-grid">
+
+          <div class="field">
+            <label for="spaceLength">空間長度 (mm)</label>
+            <div class="number-inline">
+              <button type="button" data-target="spaceLength" data-step="-100">-100</button>
+              <input id="spaceLength" type="number" value="5000" min="1" required>
+              <button type="button" data-target="spaceLength" data-step="100">+100</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="spaceWidth">空間闊度 (mm)</label>
+            <div class="number-inline">
+              <button type="button" data-target="spaceWidth" data-step="-100">-100</button>
+              <input id="spaceWidth" type="number" value="3000" min="1" required>
+              <button type="button" data-target="spaceWidth" data-step="100">+100</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="boardLength">地板長度 (mm)</label>
+            <div class="number-inline">
+              <button type="button" data-target="boardLength" data-step="-50">-50</button>
+              <input id="boardLength" type="number" value="2000" min="1" required>
+              <button type="button" data-target="boardLength" data-step="50">+50</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="boardWidth">地板闊度 (mm)</label>
+            <div class="number-inline">
+              <button type="button" data-target="boardWidth" data-step="-10">-10</button>
+              <input id="boardWidth" type="number" value="140" min="1" required>
+              <button type="button" data-target="boardWidth" data-step="10">+10</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="maxSegmentLength">最大等分規則 (mm)</label>
+            <div class="number-inline">
+              <button type="button" data-target="maxSegmentLength" data-step="-50">-50</button>
+              <input id="maxSegmentLength" type="number" value="400" min="1" required>
+              <button type="button" data-target="maxSegmentLength" data-step="50">+50</button>
+            </div>
+            <small>每個等分不可超過此數值。</small>
+          </div>
+
+          <div class="field">
+            <label for="battenLength">每枝龍骨長度 (mm)</label>
+            <div class="number-inline">
+              <button type="button" data-target="battenLength" data-step="-100">-100</button>
+              <input id="battenLength" type="number" value="2000" min="1" required>
+              <button type="button" data-target="battenLength" data-step="100">+100</button>
+            </div>
+            <small>用於計算總龍骨長度需要多少支龍骨。</small>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-primary" type="submit">Calculate</button>
+            <button class="btn btn-secondary" type="reset">Reset</button>
+          </div>
+          <div id="message" class="message" aria-live="polite"></div>
+        </form>
+      </section>
+
+      <section class="panel" aria-labelledby="result-title">
+        <h3 id="result-title">計算結果</h3>
+        <div class="results">
+          <section class="result-group">
+            <header>地板結構結果</header>
+            <div class="result-list">
+              <div class="row"><span>每板等分數</span><strong id="segmentPerBoard">-</strong></div>
+              <div class="row"><span>每段實際長度</span><strong id="segmentLength">-</strong></div>
+              <div class="row"><span>每行需要等分數</span><strong id="segmentsPerRow">-</strong></div>
+              <div class="row"><span>總行數</span><strong id="totalRows">-</strong></div>
+              <div class="row"><span>總等分數</span><strong id="totalSegments">-</strong></div>
+              <div class="row highlight"><span>總地板件數</span><strong id="totalBoards">-</strong></div>
+            </div>
+          </section>
+
+          <section class="result-group">
+            <header>面積對比</header>
+            <div class="result-list">
+              <div class="row"><span>空間總面積</span><strong id="spaceArea">-</strong></div>
+              <div class="row"><span>單件地板面積</span><strong id="boardArea">-</strong></div>
+              <div class="row"><span>總地板面積</span><strong id="totalBoardArea">-</strong></div>
+              <div class="row highlight"><span>面積差</span><strong id="areaDifference">-</strong></div>
+            </div>
+          </section>
+
+          <section class="result-group">
+            <header>龍骨數量</header>
+            <div class="result-list">
+              <div class="row"><span>龍骨行數</span><strong id="battenRows">-</strong></div>
+              <div class="row"><span>龍骨總長度</span><strong id="totalBattenLength">-</strong></div>
+              <div class="row highlight"><span>所需龍骨支數</span><strong id="totalBattens">-</strong></div>
+            </div>
+          </section>
+        </div>
+        <p class="footer-note">龍骨計算邏輯：地板每行等分數 + 1 = 龍骨行數；龍骨行數 × 空間闊度 = 龍骨總長度；龍骨總長度 ÷ 每枝龍骨長度後向上取整 = 所需龍骨支數。</p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const themeToggle = document.querySelector('[data-theme-toggle]');
+    const root = document.documentElement;
+    let currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    root.setAttribute('data-theme', currentTheme);
+    function updateThemeIcon() {
+      themeToggle.innerHTML = currentTheme === 'dark'
+        ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+        : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+    }
+    updateThemeIcon();
+    themeToggle.addEventListener('click', () => {
+      currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', currentTheme);
+      updateThemeIcon();
+    });
+
+    const form = document.getElementById('calcForm');
+    const message = document.getElementById('message');
+
+    function formatNumber(value, decimals = 0) {
+      return Number(value).toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+    }
+
+    // 新增：處理 + / - stepper 按鈕
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-target][data-step]');
+      if (!btn) return;
+      const id = btn.getAttribute('data-target');
+      const step = Number(btn.getAttribute('data-step'));
+      const input = document.getElementById(id);
+      if (!input) return;
+      const current = Number(input.value || 0);
+      let next = current + step;
+      const min = Number(input.min || 0);
+      if (next < min) next = min;
+      input.value = next;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+
+    function validateInputs(input) {
+      const required = ['spaceLength', 'spaceWidth', 'boardLength', 'boardWidth', 'maxSegmentLength', 'battenLength'];
+      for (const key of required) {
+        if (input[key] === '' || input[key] === null || Number.isNaN(input[key])) throw new Error('Please enter all required values.');
+        if (Number(input[key]) <= 0) throw new Error('Value must be greater than 0.');
+      }
+    }
+
+    function calculateFlooring(input) {
+      validateInputs(input);
+      const segmentPerBoard = Math.ceil(input.boardLength / input.maxSegmentLength);
+      const segmentLength = input.boardLength / segmentPerBoard;
+      const segmentsPerRow = Math.ceil(input.spaceLength / segmentLength);
+      const totalRows = Math.ceil(input.spaceWidth / input.boardWidth);
+      const totalSegments = segmentsPerRow * totalRows;
+      const totalBoards = Math.ceil(totalSegments / segmentPerBoard);
+      const spaceArea = input.spaceLength * input.spaceWidth;
+      const boardArea = input.boardLength * input.boardWidth;
+      const totalBoardArea = totalBoards * boardArea;
+      const areaDifference = totalBoardArea - spaceArea;
+      const battenRows = segmentsPerRow + 1;
+      const totalBattenLength = battenRows * input.spaceWidth;
+      const totalBattens = Math.ceil(totalBattenLength / input.battenLength);
+      return {
+        segmentPerBoard,
+        segmentLength,
+        segmentsPerRow,
+        totalRows,
+        totalSegments,
+        totalBoards,
+        spaceArea,
+        boardArea,
+        totalBoardArea,
+        areaDifference,
+        battenRows,
+        totalBattenLength,
+        totalBattens
+      };
+    }
+
+    function renderResults(result) {
+      document.getElementById('segmentPerBoard').textContent = formatNumber(result.segmentPerBoard) + ' 段';
+      document.getElementById('segmentLength').textContent = formatNumber(result.segmentLength, 2) + ' mm';
+      document.getElementById('segmentsPerRow').textContent = formatNumber(result.segmentsPerRow) + ' 段';
+      document.getElementById('totalRows').textContent = formatNumber(result.totalRows) + ' 行';
+      document.getElementById('totalSegments').textContent = formatNumber(result.totalSegments) + ' 段';
+      document.getElementById('totalBoards').textContent = formatNumber(result.totalBoards) + ' 件';
+
+      const spaceAreaM2 = result.spaceArea / 1000000;
+      const spaceAreaFt2 = spaceAreaM2 * 10.7639104167;
+      const totalBattenLengthM = result.totalBattenLength / 1000;
+
+      document.getElementById('spaceArea').textContent = formatNumber(spaceAreaFt2, 2) + ' ft² / ' + formatNumber(spaceAreaM2, 2) + ' m²';
+      document.getElementById('boardArea').textContent = formatNumber(result.boardArea) + ' mm²';
+      document.getElementById('totalBoardArea').textContent = formatNumber(result.totalBoardArea) + ' mm²';
+      document.getElementById('areaDifference').textContent = formatNumber(result.areaDifference) + ' mm²';
+
+      document.getElementById('battenRows').textContent = formatNumber(result.battenRows) + ' 行';
+      document.getElementById('totalBattenLength').textContent = formatNumber(totalBattenLengthM, 2) + ' m';
+      document.getElementById('totalBattens').textContent = formatNumber(result.totalBattens) + ' 支';
+    }
+
+    function getInputValues() {
+      return {
+        spaceLength: Number(document.getElementById('spaceLength').value),
+        spaceWidth: Number(document.getElementById('spaceWidth').value),
+        boardLength: Number(document.getElementById('boardLength').value),
+        boardWidth: Number(document.getElementById('boardWidth').value),
+        maxSegmentLength: Number(document.getElementById('maxSegmentLength').value),
+        battenLength: Number(document.getElementById('battenLength').value)
+      };
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      try {
+        message.textContent = '';
+        renderResults(calculateFlooring(getInputValues()));
+      } catch (error) {
+        message.textContent = error.message;
+      }
+    });
+
+    form.addEventListener('reset', () => {
+      setTimeout(() => {
+        message.textContent = '';
+        document.querySelectorAll('.result-list strong').forEach(el => el.textContent = '-');
+      }, 0);
+    });
+
+    try { renderResults(calculateFlooring(getInputValues())); } catch (error) { message.textContent = error.message; }
+  </script>
+</body>
+</html>
