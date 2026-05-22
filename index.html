@@ -22,35 +22,142 @@
       --shadow-sm:0 1px 2px rgba(0,0,0,.25); --shadow-md:0 12px 32px rgba(0,0,0,.35);
     }
     * { box-sizing: border-box; }
-    body { margin:0; min-height:100vh; font-family:var(--font-body); background:var(--color-bg); color:var(--color-text); line-height:1.5; }
+    body {
+      margin:0;
+      min-height:100vh;
+      font-family:var(--font-body);
+      background:var(--color-bg);
+      color:var(--color-text);
+      line-height:1.5;
+    }
     button,input { font:inherit; }
-    .shell { max-width:1180px; margin:0 auto; padding:var(--space-6); }
-    .topbar { display:flex; align-items:center; justify-content:space-between; gap:var(--space-4); margin-bottom:var(--space-8); }
+
+    .shell {
+      max-width:1180px;
+      margin:0 auto;
+      padding:var(--space-6);
+    }
+
+    .topbar {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:var(--space-4);
+      margin-bottom:var(--space-6);
+    }
     .brand { display:flex; align-items:center; gap:var(--space-3); }
-    .logo { width:42px; height:42px; border-radius:12px; background:var(--color-surface); border:1px solid var(--color-border); display:grid; place-items:center; box-shadow:var(--shadow-sm); }
-    .brand h1 { margin:0; font-family:var(--font-display); font-size:var(--text-xl); line-height:1; font-weight:500; }
-    .brand p { margin:.3rem 0 0; color:var(--color-text-muted); font-size:var(--text-sm); }
-    .theme-toggle { min-width:44px; min-height:44px; border-radius:999px; border:1px solid var(--color-border); background:var(--color-surface); color:var(--color-text); display:grid; place-items:center; box-shadow:var(--shadow-sm); }
-    .hero { display:grid; grid-template-columns:1.2fr .8fr; gap:var(--space-6); margin-bottom:var(--space-8); }
-    .hero-card, .panel { background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-xl); box-shadow:var(--shadow-md); }
-    .hero-card { padding:var(--space-8); background:linear-gradient(180deg, var(--color-surface-2), var(--color-surface)); }
-    .hero-card h2 { margin:0 0 var(--space-4); font-family:var(--font-display); font-size:clamp(2rem, 5vw, 3.5rem); max-width:10ch; line-height:1; font-weight:500; }
-    .hero-card p { margin:0; max-width:56ch; color:var(--color-text-muted); font-size:var(--text-base); }
-    .hero-meta { display:grid; gap:var(--space-4); padding:var(--space-6); }
-    .meta-box { background:var(--color-surface-2); border:1px solid var(--color-border); border-radius:var(--radius-lg); padding:var(--space-5); }
-    .meta-box span { display:block; font-size:var(--text-xs); color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.4rem; }
-    .meta-box strong { font-size:var(--text-lg); }
-    .app-grid { display:grid; grid-template-columns:minmax(320px, 420px) 1fr; gap:var(--space-6); align-items:start; }
-    .panel { padding:var(--space-6); }
-    .panel h3 { margin:0 0 var(--space-5); font-size:var(--text-lg); }
+    .logo {
+      width:42px; height:42px; border-radius:12px;
+      background:var(--color-surface);
+      border:1px solid var(--color-border);
+      display:grid; place-items:center;
+      box-shadow:var(--shadow-sm);
+    }
+    .brand h1 {
+      margin:0;
+      font-family:var(--font-display);
+      font-size:var(--text-xl);
+      line-height:1;
+      font-weight:500;
+    }
+    .brand p {
+      margin:.3rem 0 0;
+      color:var(--color-text-muted);
+      font-size:var(--text-sm);
+    }
+    .theme-toggle {
+      min-width:44px;
+      min-height:44px;
+      border-radius:999px;
+      border:1px solid var(--color-border);
+      background:var(--color-surface);
+      color:var(--color-text);
+      display:grid;
+      place-items:center;
+      box-shadow:var(--shadow-sm);
+      cursor:pointer;
+      transition:background .2s ease, border-color .2s ease, transform .12s ease;
+    }
+    .theme-toggle:hover {
+      background:var(--color-surface-offset);
+      border-color:var(--color-text-faint);
+    }
+    .theme-toggle:active {
+      transform:scale(.97);
+    }
+
+    .hero {
+      display:block;
+      margin-bottom:var(--space-6);
+    }
+
+    .hero-card,
+    .panel {
+      background:var(--color-surface);
+      border:1px solid var(--color-border);
+      border-radius:var(--radius-xl);
+      box-shadow:var(--shadow-md);
+    }
+
+    .hero-card {
+      padding:var(--space-8);
+      background:linear-gradient(180deg, var(--color-surface-2), var(--color-surface));
+    }
+    .hero-card h2 {
+      margin:0 0 var(--space-3);
+      font-family:var(--font-display);
+      font-size:clamp(2rem, 4vw, 3.2rem);
+      max-width:none;
+      line-height:1.02;
+      font-weight:500;
+    }
+    .hero-card p {
+      margin:0;
+      max-width:72ch;
+      color:var(--color-text-muted);
+      font-size:var(--text-base);
+    }
+
+    .app-grid {
+      display:grid;
+      grid-template-columns:minmax(320px,390px) 1fr;
+      gap:var(--space-5);
+      align-items:start;
+    }
+
+    .panel { padding:var(--space-5); }
+    .panel h3 {
+      margin:0 0 var(--space-4);
+      font-size:var(--text-lg);
+    }
+
     .form-grid { display:grid; gap:var(--space-4); }
     .field { display:grid; gap:.45rem; }
     .field label { font-size:var(--text-sm); font-weight:600; }
-    .field input { min-height:48px; border-radius:var(--radius-md); border:1px solid var(--color-border); background:var(--color-surface-2); padding:0 .9rem; color:var(--color-text); }
     .field small { color:var(--color-text-muted); font-size:var(--text-xs); }
 
-    /* 新增：數值 stepper + 手機優化 */
-    .number-inline { display:flex; align-items:center; gap:0.5rem; }
+    .field input {
+      min-height:48px;
+      border-radius:var(--radius-md);
+      border:1px solid var(--color-border);
+      background:var(--color-surface-2);
+      padding:0 .9rem;
+      color:var(--color-text);
+    }
+    .field input[type="checkbox"] {
+      width:auto;
+      height:auto;
+      margin-right:.5rem;
+      min-height:auto;
+      padding:0;
+    }
+
+    .number-inline {
+      display:grid;
+      grid-template-columns:64px 1fr 64px;
+      gap:.5rem;
+      align-items:center;
+    }
     .number-inline button {
       min-width:64px;
       min-height:44px;
@@ -58,36 +165,97 @@
       border:1px solid var(--color-border);
       background:var(--color-surface-2);
       color:var(--color-text);
+      transition:background .2s ease, border-color .2s ease, transform .12s ease;
+    }
+    .number-inline button:hover {
+      background:var(--color-surface-offset);
+      border-color:var(--color-text-faint);
+    }
+    .number-inline button:active {
+      transform:scale(.98);
     }
     .number-inline input { flex:1; }
 
-    .actions { display:flex; gap:var(--space-3); margin-top:var(--space-2); flex-wrap:wrap; }
-    .btn { min-height:48px; padding:0 1rem; border-radius:999px; border:1px solid transparent; font-weight:600; }
+    .actions {
+      display:flex;
+      gap:var(--space-3);
+      margin-top:var(--space-3);
+      flex-wrap:wrap;
+    }
+    .btn {
+      min-height:48px;
+      padding:0 1rem;
+      border-radius:999px;
+      border:1px solid transparent;
+      font-weight:600;
+    }
     .btn-primary { background:var(--color-primary); color:var(--color-text-inverse); }
     .btn-primary:hover { background:var(--color-primary-hover); }
-    .btn-secondary { background:var(--color-surface-2); border-color:var(--color-border); color:var(--color-text); }
-    .message { min-height:24px; font-size:var(--text-sm); margin-top:var(--space-3); color:var(--color-error); }
-    .results { display:grid; gap:var(--space-5); }
-    .result-group { border:1px solid var(--color-border); border-radius:var(--radius-lg); overflow:hidden; background:var(--color-surface-2); }
-    .result-group header { padding:var(--space-4) var(--space-5); border-bottom:1px solid var(--color-divider); font-weight:700; }
+    .btn-secondary {
+      background:var(--color-surface-2);
+      border-color:var(--color-border);
+      color:var(--color-text);
+    }
+
+    .message {
+      min-height:24px;
+      font-size:var(--text-sm);
+      margin-top:var(--space-3);
+      color:var(--color-error);
+    }
+
+    .results {
+      display:grid;
+      gap:var(--space-4);
+    }
+    .result-group {
+      border:1px solid var(--color-border);
+      border-radius:var(--radius-lg);
+      overflow:hidden;
+      background:var(--color-surface-2);
+    }
+    .result-group header {
+      padding:var(--space-3) var(--space-5);
+      border-bottom:1px solid var(--color-divider);
+      font-weight:700;
+    }
     .result-list { display:grid; }
-    .row { display:grid; grid-template-columns:1fr auto; gap:var(--space-4); padding:var(--space-4) var(--space-5); border-bottom:1px solid var(--color-divider); }
+    .row {
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:var(--space-4);
+      padding:.9rem var(--space-5);
+      border-bottom:1px solid var(--color-divider);
+    }
     .row:last-child { border-bottom:none; }
     .row span { color:var(--color-text-muted); }
-    .row strong { font-variant-numeric:tabular-nums; text-align:right; }
+    .row strong {
+      font-variant-numeric:tabular-nums;
+      text-align:right;
+    }
     .highlight { background:var(--color-primary-highlight); }
-    .footer-note { margin-top:var(--space-5); color:var(--color-text-muted); font-size:var(--text-sm); }
+
+    .footer-note {
+      margin-top:var(--space-4);
+      color:var(--color-text-muted);
+      font-size:var(--text-sm);
+    }
 
     @media (max-width: 960px) {
-      .hero, .app-grid { grid-template-columns:1fr; }
+      .app-grid { grid-template-columns:1fr; }
       .hero-card h2 { max-width:none; }
       .shell { padding:var(--space-4); }
     }
 
     @media (max-width: 768px) {
-      .app-grid { grid-template-columns:1fr; }
+      .number-inline { grid-template-columns:56px 1fr 56px; }
       .actions { justify-content:stretch; }
       .btn { flex:1; text-align:center; }
+      .hero-card,
+      .panel { border-radius:var(--radius-lg); }
+      .hero-card { padding:var(--space-6); }
+      .panel { padding:var(--space-4); }
+      .row { padding:.85rem 1rem; }
     }
   </style>
 </head>
@@ -103,7 +271,7 @@
         </div>
         <div>
           <h1>Flooring MVP</h1>
-          <p>戶外木地板 + 龍骨材料計算器</p>
+          <p>戶外木地板 + 面通材料計算器</p>
         </div>
       </div>
       <button class="theme-toggle" data-theme-toggle aria-label="Switch theme"></button>
@@ -111,14 +279,9 @@
 
     <section class="hero">
       <article class="hero-card">
-        <h2>地板數量與龍骨數量一齊計</h2>
-        <p>此版本移除損耗率輸入，集中做好 MVP 核心：按最大等分規則計地板分段、總板數、面積對比，再加上龍骨行數、龍骨總長度與所需龍骨支數。</p>
+        <h2>地板數量與面通數量一齊計</h2>
+        <p>此版本移除損耗率輸入，集中做好 MVP 核心：按最大等分規則計地板分段、總板數、面積對比，再加上面通、底通與鋁角。</p>
       </article>
-      <aside class="hero-meta panel">
-        <div class="meta-box"><span>核心規則</span><strong>全部向上取整</strong></div>
-        <div class="meta-box"><span>新增 section</span><strong>龍骨數量計算</strong></div>
-        <div class="meta-box"><span>驗算</span><strong>面積 + 龍骨總長度</strong></div>
-      </aside>
     </section>
 
     <main class="app-grid">
@@ -173,18 +336,38 @@
           </div>
 
           <div class="field">
-            <label for="battenLength">每枝龍骨長度 (mm)</label>
+            <label for="battenLength">每枝面通長度 (mm)</label>
             <div class="number-inline">
               <button type="button" data-target="battenLength" data-step="-100">-100</button>
               <input id="battenLength" type="number" value="2000" min="1" required>
               <button type="button" data-target="battenLength" data-step="100">+100</button>
             </div>
-            <small>用於計算總龍骨長度需要多少支龍骨。</small>
+            <small>用於計算總面通長度需要多少支面通。</small>
+          </div>
+
+          <div class="field">
+            <label><input id="bottomBattenEnabled" type="checkbox"> 啟用底通</label>
+            <small>勾選後顯示底通行數、底通總長度與底通支數。</small>
+          </div>
+
+          <div class="field">
+            <label><input id="aluminumEnabled" type="checkbox"> 啟用鋁角</label>
+            <small>勾選後才計算鋁角總長度。</small>
+          </div>
+
+          <div class="field">
+            <label for="aluminumHeight">鋁角高度 (mm)</label>
+            <div class="number-inline">
+              <button type="button" data-target="aluminumHeight" data-step="-10">-10</button>
+              <input id="aluminumHeight" type="number" value="50" min="1">
+              <button type="button" data-target="aluminumHeight" data-step="10">+10</button>
+            </div>
+            <small>僅在啟用鋁角時使用。</small>
           </div>
 
           <div class="actions">
-            <button class="btn btn-primary" type="submit">Calculate</button>
-            <button class="btn btn-secondary" type="reset">Reset</button>
+            <button class="btn btn-primary" type="submit">計算</button>
+            <button class="btn btn-secondary" type="reset">重設</button>
           </div>
           <div id="message" class="message" aria-live="polite"></div>
         </form>
@@ -216,15 +399,33 @@
           </section>
 
           <section class="result-group">
-            <header>龍骨數量</header>
+            <header>面通數量</header>
             <div class="result-list">
-              <div class="row"><span>龍骨行數</span><strong id="battenRows">-</strong></div>
-              <div class="row"><span>龍骨總長度</span><strong id="totalBattenLength">-</strong></div>
-              <div class="row highlight"><span>所需龍骨支數</span><strong id="totalBattens">-</strong></div>
+              <div class="row"><span>面通行數</span><strong id="battenRows">-</strong></div>
+              <div class="row"><span>面通總長度</span><strong id="totalBattenLength">-</strong></div>
+              <div class="row highlight"><span>所需面通支數</span><strong id="totalBattens">-</strong></div>
+            </div>
+          </section>
+
+          <section class="result-group">
+            <header>底通</header>
+            <div class="result-list">
+              <div class="row"><span>底通行數</span><strong id="bottomBattenRows">-</strong></div>
+              <div class="row"><span>底通總長度</span><strong id="bottomBattenLength">-</strong></div>
+              <div class="row highlight"><span>底通支數</span><strong id="bottomBattens">-</strong></div>
+            </div>
+          </section>
+
+          <section class="result-group">
+            <header>鋁角</header>
+            <div class="result-list">
+              <div class="row highlight"><span>鋁角總長度</span><strong id="aluminumLength">-</strong></div>
             </div>
           </section>
         </div>
-        <p class="footer-note">龍骨計算邏輯：地板每行等分數 + 1 = 龍骨行數；龍骨行數 × 空間闊度 = 龍骨總長度；龍骨總長度 ÷ 每枝龍骨長度後向上取整 = 所需龍骨支數。</p>
+        <p class="footer-note">
+          面通計算：地板每行等分數 + 1 = 面通行數；面通行數 × 空間闊度 = 面通總長度；面通總長度 ÷ 每枝面通長度後向上取整 = 所需面通支數。
+        </p>
       </section>
     </main>
   </div>
@@ -253,16 +454,12 @@
       return Number(value).toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
     }
 
-    // 新增：處理 + / - stepper 按鈕
     document.addEventListener('click', (e) => {
       const btn = e.target.closest('button[data-target][data-step]');
       if (!btn) return;
-      const id = btn.getAttribute('data-target');
-      const step = Number(btn.getAttribute('data-step'));
-      const input = document.getElementById(id);
+      const input = document.getElementById(btn.dataset.target);
       if (!input) return;
-      const current = Number(input.value || 0);
-      let next = current + step;
+      let next = Number(input.value || 0) + Number(btn.dataset.step);
       const min = Number(input.min || 0);
       if (next < min) next = min;
       input.value = next;
@@ -272,8 +469,11 @@
     function validateInputs(input) {
       const required = ['spaceLength', 'spaceWidth', 'boardLength', 'boardWidth', 'maxSegmentLength', 'battenLength'];
       for (const key of required) {
-        if (input[key] === '' || input[key] === null || Number.isNaN(input[key])) throw new Error('Please enter all required values.');
-        if (Number(input[key]) <= 0) throw new Error('Value must be greater than 0.');
+        if (input[key] === '' || input[key] === null || Number.isNaN(input[key])) throw new Error('請輸入所有必要數值。');
+        if (input[key] <= 0) throw new Error('數值需大於 0。');
+      }
+      if (input.aluminumEnabled && (input.aluminumHeight === '' || Number.isNaN(input.aluminumHeight) || input.aluminumHeight <= 0)) {
+        throw new Error('請輸入大於 0 的鋁角高度。');
       }
     }
 
@@ -285,13 +485,22 @@
       const totalRows = Math.ceil(input.spaceWidth / input.boardWidth);
       const totalSegments = segmentsPerRow * totalRows;
       const totalBoards = Math.ceil(totalSegments / segmentPerBoard);
+
       const spaceArea = input.spaceLength * input.spaceWidth;
       const boardArea = input.boardLength * input.boardWidth;
       const totalBoardArea = totalBoards * boardArea;
       const areaDifference = totalBoardArea - spaceArea;
+
       const battenRows = segmentsPerRow + 1;
       const totalBattenLength = battenRows * input.spaceWidth;
       const totalBattens = Math.ceil(totalBattenLength / input.battenLength);
+
+      const bottomBattenRows = Math.ceil(input.spaceWidth / 500) + 1;
+      const totalBottomBattenLength = bottomBattenRows * input.spaceLength;
+      const totalBottomBattens = Math.ceil(totalBottomBattenLength / input.battenLength);
+
+      const totalAluminumLength = input.aluminumEnabled ? battenRows * bottomBattenRows * input.aluminumHeight : null;
+
       return {
         segmentPerBoard,
         segmentLength,
@@ -305,11 +514,15 @@
         areaDifference,
         battenRows,
         totalBattenLength,
-        totalBattens
+        totalBattens,
+        bottomBattenRows,
+        totalBottomBattenLength,
+        totalBottomBattens,
+        totalAluminumLength
       };
     }
 
-    function renderResults(result) {
+    function renderResults(result, input) {
       document.getElementById('segmentPerBoard').textContent = formatNumber(result.segmentPerBoard) + ' 段';
       document.getElementById('segmentLength').textContent = formatNumber(result.segmentLength, 2) + ' mm';
       document.getElementById('segmentsPerRow').textContent = formatNumber(result.segmentsPerRow) + ' 段';
@@ -319,16 +532,28 @@
 
       const spaceAreaM2 = result.spaceArea / 1000000;
       const spaceAreaFt2 = spaceAreaM2 * 10.7639104167;
+      const totalBoardAreaM2 = result.totalBoardArea / 1000000;
       const totalBattenLengthM = result.totalBattenLength / 1000;
+      const totalBottomBattenLengthM = result.totalBottomBattenLength / 1000;
+      const totalAluminumLengthM = input.aluminumEnabled ? result.totalAluminumLength / 1000 : null;
 
       document.getElementById('spaceArea').textContent = formatNumber(spaceAreaFt2, 2) + ' ft² / ' + formatNumber(spaceAreaM2, 2) + ' m²';
       document.getElementById('boardArea').textContent = formatNumber(result.boardArea) + ' mm²';
-      document.getElementById('totalBoardArea').textContent = formatNumber(result.totalBoardArea) + ' mm²';
+      document.getElementById('totalBoardArea').textContent = formatNumber(totalBoardAreaM2, 2) + ' m²';
       document.getElementById('areaDifference').textContent = formatNumber(result.areaDifference) + ' mm²';
 
       document.getElementById('battenRows').textContent = formatNumber(result.battenRows) + ' 行';
       document.getElementById('totalBattenLength').textContent = formatNumber(totalBattenLengthM, 2) + ' m';
       document.getElementById('totalBattens').textContent = formatNumber(result.totalBattens) + ' 支';
+
+      const bottomEnabled = input.bottomBattenEnabled;
+      document.getElementById('bottomBattenRows').textContent = bottomEnabled ? formatNumber(result.bottomBattenRows) + ' 行' : '-';
+      document.getElementById('bottomBattenLength').textContent = bottomEnabled ? formatNumber(totalBottomBattenLengthM, 2) + ' m' : '-';
+      document.getElementById('bottomBattens').textContent = bottomEnabled ? formatNumber(result.totalBottomBattens) + ' 支' : '-';
+
+      document.getElementById('aluminumLength').textContent = input.aluminumEnabled
+        ? formatNumber(totalAluminumLengthM, 2) + ' m'
+        : '-';
     }
 
     function getInputValues() {
@@ -338,7 +563,10 @@
         boardLength: Number(document.getElementById('boardLength').value),
         boardWidth: Number(document.getElementById('boardWidth').value),
         maxSegmentLength: Number(document.getElementById('maxSegmentLength').value),
-        battenLength: Number(document.getElementById('battenLength').value)
+        battenLength: Number(document.getElementById('battenLength').value),
+        bottomBattenEnabled: document.getElementById('bottomBattenEnabled').checked,
+        aluminumEnabled: document.getElementById('aluminumEnabled').checked,
+        aluminumHeight: Number(document.getElementById('aluminumHeight').value)
       };
     }
 
@@ -346,7 +574,8 @@
       event.preventDefault();
       try {
         message.textContent = '';
-        renderResults(calculateFlooring(getInputValues()));
+        const input = getInputValues();
+        renderResults(calculateFlooring(input), input);
       } catch (error) {
         message.textContent = error.message;
       }
@@ -359,7 +588,12 @@
       }, 0);
     });
 
-    try { renderResults(calculateFlooring(getInputValues())); } catch (error) { message.textContent = error.message; }
+    try {
+      const input = getInputValues();
+      renderResults(calculateFlooring(input), input);
+    } catch (error) {
+      message.textContent = error.message;
+    }
   </script>
 </body>
 </html>
