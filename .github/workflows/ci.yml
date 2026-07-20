@@ -1,0 +1,21 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  html-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node (for JS syntax check)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Run calculator CI check
+        # Advisory mode: structural regressions (unbalanced tags, broken JS) fail the build;
+        # design-system items are reported but non-blocking. Flip to `--strict` after the
+        # harmonization PRs (outdoor #1-#5, joist #2/#3, flooring #1) merge — see TASKS T8.
+        run: python3 .github/scripts/ci-check.py index.html
