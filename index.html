@@ -31,7 +31,7 @@
     }
     button,input { font:inherit; }
 
-    .shell {
+    .app {
       max-width:1180px;
       margin:0 auto;
       padding:var(--space-6);
@@ -91,7 +91,7 @@
     }
 
     .hero-card,
-    .panel {
+    .card {
       background:var(--color-surface);
       border:1px solid var(--color-border);
       border-radius:var(--radius-xl);
@@ -124,13 +124,13 @@
       align-items:start;
     }
 
-    .panel { padding:var(--space-5); }
-    .panel h3 {
+    .card { padding:var(--space-5); }
+    .card h3 {
       margin:0 0 var(--space-4);
       font-size:var(--text-lg);
     }
 
-    .form-grid { display:grid; gap:var(--space-4); }
+    .field-grid { display:grid; gap:var(--space-4); }
     .field { display:grid; gap:.45rem; }
     .field label { font-size:var(--text-sm); font-weight:600; }
     .field small { color:var(--color-text-muted); font-size:var(--text-xs); }
@@ -175,7 +175,7 @@
     }
     .number-inline input { flex:1; }
 
-    .actions {
+    .btn-row {
       display:flex;
       gap:var(--space-3);
       margin-top:var(--space-3);
@@ -246,23 +246,23 @@
     @media (max-width: 960px) {
       .app-grid { grid-template-columns:1fr; }
       .hero-card h2 { max-width:none; }
-      .shell { padding:var(--space-4); }
+      .app { padding:var(--space-4); }
     }
 
     @media (max-width: 768px) {
       .number-inline { grid-template-columns:56px 1fr 56px; }
-      .actions { justify-content:stretch; }
+      .btn-row { justify-content:stretch; }
       .btn { flex:1; text-align:center; }
       .hero-card,
-      .panel { border-radius:var(--radius-lg); }
+      .card { border-radius:var(--radius-lg); }
       .hero-card { padding:var(--space-6); }
-      .panel { padding:var(--space-4); }
+      .card { padding:var(--space-4); }
       .row { padding:.85rem 1rem; }
     }
   </style>
 </head>
 <body>
-  <div class="shell">
+  <div class="app">
     <header class="topbar">
       <div class="brand">
         <div class="logo" aria-hidden="true">
@@ -287,9 +287,9 @@
     </section>
 
     <main class="app-grid">
-      <section class="panel" aria-labelledby="input-title">
+      <section class="card" aria-labelledby="input-title">
         <h3 id="input-title">輸入資料</h3>
-        <form id="calcForm" class="form-grid">
+        <form id="calcForm" class="field-grid">
 
           <div class="field">
             <label for="spaceLength">空間長度（毫米）</label>
@@ -367,7 +367,7 @@
             <small>僅在啟用鋁角時使用。</small>
           </div>
 
-          <div class="actions">
+          <div class="btn-row">
             <button class="btn btn-primary" type="submit">計算</button>
             <button class="btn btn-secondary" type="reset">重設</button>
           </div>
@@ -375,7 +375,7 @@
         </form>
       </section>
 
-      <section class="panel" aria-labelledby="result-title">
+      <section class="card" aria-labelledby="result-title">
         <h3 id="result-title">計算結果</h3>
         <div class="results">
           <section class="result-group">
