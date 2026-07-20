@@ -20,6 +20,18 @@
       --color-text-inverse:#ffffff; --color-primary:#4a8c73; --color-primary-hover:#3d7962; --color-primary-highlight:#2c3a35; --color-error:#c45b52;
       --shadow-sm:0 2px 8px rgba(0,0,0,.25); --shadow-md:0 4px 24px rgba(0,0,0,.35);
     }
+    /* CSS-only dark mode: honor the OS setting like the rest of the suite. The JS
+       toggle below sets [data-theme] which overrides this; the media query keeps dark
+       mode reachable without JS and matches flooring-calculator / joist_calculater. */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --color-bg:#1a1917; --color-surface:#242322; --color-surface-2:#2a2928; --color-surface-offset:#2a2928;
+        --color-border:#3a3632; --color-divider:#3a3632; --color-text:#e8e4df; --color-text-muted:#9b9590; --color-text-faint:#6b6965;
+        --color-text-inverse:#ffffff; --color-primary:#4a8c73; --color-primary-hover:#3d7962; --color-primary-highlight:#2c3a35; --color-error:#c45b52;
+        --shadow-sm:0 2px 8px rgba(0,0,0,.25); --shadow-md:0 4px 24px rgba(0,0,0,.35);
+      }
+    }
     * { box-sizing: border-box; }
     body {
       margin:0;
