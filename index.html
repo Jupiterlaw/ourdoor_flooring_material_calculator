@@ -292,7 +292,7 @@
         <form id="calcForm" class="form-grid">
 
           <div class="field">
-            <label for="spaceLength">空間長度 (mm)</label>
+            <label for="spaceLength">空間長度（毫米）</label>
             <div class="number-inline">
               <button type="button" data-target="spaceLength" data-step="-100">-100</button>
               <input id="spaceLength" type="number" value="5000" min="1" required>
@@ -301,7 +301,7 @@
           </div>
 
           <div class="field">
-            <label for="spaceWidth">空間闊度 (mm)</label>
+            <label for="spaceWidth">空間闊度（毫米）</label>
             <div class="number-inline">
               <button type="button" data-target="spaceWidth" data-step="-100">-100</button>
               <input id="spaceWidth" type="number" value="3000" min="1" required>
@@ -310,7 +310,7 @@
           </div>
 
           <div class="field">
-            <label for="boardLength">地板長度 (mm)</label>
+            <label for="boardLength">地板長度（毫米）</label>
             <div class="number-inline">
               <button type="button" data-target="boardLength" data-step="-50">-50</button>
               <input id="boardLength" type="number" value="2000" min="1" required>
@@ -319,7 +319,7 @@
           </div>
 
           <div class="field">
-            <label for="boardWidth">地板闊度 (mm)</label>
+            <label for="boardWidth">地板闊度（毫米）</label>
             <div class="number-inline">
               <button type="button" data-target="boardWidth" data-step="-10">-10</button>
               <input id="boardWidth" type="number" value="140" min="1" required>
@@ -328,7 +328,7 @@
           </div>
 
           <div class="field">
-            <label for="maxSegmentLength">最大等分規則 (mm)</label>
+            <label for="maxSegmentLength">最大等分規則（毫米）</label>
             <div class="number-inline">
               <button type="button" data-target="maxSegmentLength" data-step="-50">-50</button>
               <input id="maxSegmentLength" type="number" value="400" min="1" required>
@@ -338,7 +338,7 @@
           </div>
 
           <div class="field">
-            <label for="battenLength">每枝面通長度 (mm)</label>
+            <label for="battenLength">每枝面通長度（毫米）</label>
             <div class="number-inline">
               <button type="button" data-target="battenLength" data-step="-100">-100</button>
               <input id="battenLength" type="number" value="2000" min="1" required>
@@ -358,7 +358,7 @@
           </div>
 
           <div class="field">
-            <label for="aluminumHeight">鋁角高度 (mm)</label>
+            <label for="aluminumHeight">鋁角高度（毫米）</label>
             <div class="number-inline">
               <button type="button" data-target="aluminumHeight" data-step="-10">-10</button>
               <input id="aluminumHeight" type="number" value="50" min="1">
@@ -540,9 +540,11 @@
       const totalAluminumLengthM = input.aluminumEnabled ? result.totalAluminumLength / 1000 : null;
 
       document.getElementById('spaceArea').textContent = formatNumber(spaceAreaFt2, 2) + ' ft² / ' + formatNumber(spaceAreaM2, 2) + ' m²';
-      document.getElementById('boardArea').textContent = formatNumber(result.boardArea) + ' mm²';
+      const boardAreaM2 = result.boardArea / 1000000;
+      document.getElementById('boardArea').textContent = formatNumber(boardAreaM2, 4) + ' m² / ' + formatNumber(boardAreaM2 * 10.7639104167, 4) + ' ft²';
       document.getElementById('totalBoardArea').textContent = formatNumber(totalBoardAreaM2, 2) + ' m²';
-      document.getElementById('areaDifference').textContent = formatNumber(result.areaDifference) + ' mm²';
+      const areaDiffM2 = result.areaDifference / 1000000;
+      document.getElementById('areaDifference').textContent = formatNumber(areaDiffM2, 2) + ' m² / ' + formatNumber(areaDiffM2 * 10.7639104167, 2) + ' ft²';
 
       document.getElementById('battenRows').textContent = formatNumber(result.battenRows) + ' 行';
       document.getElementById('totalBattenLength').textContent = formatNumber(totalBattenLengthM, 2) + ' m';
