@@ -6,19 +6,19 @@
   <title>Outdoor Wood Flooring Calculator</title>
   <style>
     :root, [data-theme="light"] {
-      --color-bg:#f7f6f2; --color-surface:#f9f8f5; --color-surface-2:#fbfbf9; --color-surface-offset:#f3f0ec;
-      --color-border:#d4d1ca; --color-divider:#dcd9d5; --color-text:#28251d; --color-text-muted:#7a7974;
-      --color-text-faint:#bab9b4; --color-text-inverse:#f9f8f4; --color-primary:#01696f; --color-primary-hover:#0c4e54;
-      --color-primary-highlight:#cedcd8; --color-error:#a12c7b; --shadow-sm:0 1px 2px rgba(0,0,0,.05); --shadow-md:0 12px 32px rgba(0,0,0,.08);
-      --radius-sm:.375rem; --radius-md:.5rem; --radius-lg:.75rem; --radius-xl:1rem; --space-2:.5rem; --space-3:.75rem;
+      --color-bg:#f4f1ec; --color-surface:#ffffff; --color-surface-2:#faf8f5; --color-surface-offset:#f3f0ec;
+      --color-border:#e2ddd4; --color-divider:#e2ddd4; --color-text:#2c2926; --color-text-muted:#6b6560;
+      --color-text-faint:#9b9590; --color-text-inverse:#ffffff; --color-primary:#2d5a4a; --color-primary-hover:#234839;
+      --color-primary-highlight:#e8f0ec; --color-error:#9b3b32; --shadow-sm:0 2px 8px rgba(44,41,38,.06); --shadow-md:0 4px 24px rgba(44,41,38,.08);
+      --radius-sm:.625rem; --radius-md:.75rem; --radius-lg:.875rem; --radius-xl:.875rem; --space-2:.5rem; --space-3:.75rem;
       --space-4:1rem; --space-5:1.25rem; --space-6:1.5rem; --space-8:2rem; --space-10:2.5rem; --text-xs:.75rem;
       --text-sm:.95rem; --text-base:1rem; --text-lg:1.2rem; --text-xl:1.8rem; --font-display:"Segoe UI","PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif; --font-body:"Segoe UI","PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
     }
     [data-theme="dark"] {
-      --color-bg:#171614; --color-surface:#1c1b19; --color-surface-2:#201f1d; --color-surface-offset:#1d1c1a;
-      --color-border:#393836; --color-divider:#262523; --color-text:#cdccca; --color-text-muted:#979590; --color-text-faint:#6b6965;
-      --color-text-inverse:#2b2a28; --color-primary:#4f98a3; --color-primary-hover:#227f8b; --color-primary-highlight:#313b3b; --color-error:#d163a7;
-      --shadow-sm:0 1px 2px rgba(0,0,0,.25); --shadow-md:0 12px 32px rgba(0,0,0,.35);
+      --color-bg:#1a1917; --color-surface:#242322; --color-surface-2:#2a2928; --color-surface-offset:#2a2928;
+      --color-border:#3a3632; --color-divider:#3a3632; --color-text:#e8e4df; --color-text-muted:#9b9590; --color-text-faint:#6b6965;
+      --color-text-inverse:#ffffff; --color-primary:#4a8c73; --color-primary-hover:#3d7962; --color-primary-highlight:#2c3a35; --color-error:#c45b52;
+      --shadow-sm:0 2px 8px rgba(0,0,0,.25); --shadow-md:0 4px 24px rgba(0,0,0,.35);
     }
     * { box-sizing: border-box; }
     body {
@@ -100,7 +100,7 @@
 
     .hero-card {
       padding:var(--space-8);
-      background:linear-gradient(180deg, var(--color-surface-2), var(--color-surface));
+      background:var(--color-surface);
     }
     .hero-card h2 {
       margin:0 0 var(--space-3);
@@ -231,6 +231,9 @@
     .row strong {
       font-variant-numeric:tabular-nums;
       text-align:right;
+      font-size:1.15rem;
+      font-weight:700;
+      color:var(--color-text);
     }
     .highlight { background:var(--color-primary-highlight); }
 
