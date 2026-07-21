@@ -1,0 +1,132 @@
+@media print {
+  /* Hide interactive UI for paper */
+  .btn,
+  .btn-primary,
+  .btn-ghost,
+  .theme-toggle,
+  button,
+  input[type="button"],
+  input[type="submit"],
+  .btn-row,
+  .actions,
+  .shell,
+  .panel {
+    display: none !important;
+  }
+
+  /* Simplify layout for paper */
+  body,
+  .app,
+  .card,
+  .area-card,
+  .result-card,
+  .panel {
+    background: #fff !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+    margin: 0 !important;
+    padding: 0.5cm !important;
+  }
+
+  /* Remove visual noise */
+  .app-grid,
+  .form-grid {
+    display: block !important;
+  }
+
+  /* Table layout and styling */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    page-break-inside: avoid !important;
+    font-size: 0.85pt !important;
+  }
+
+  th,
+  td {
+    border: 1px solid #999 !important;
+    padding: 0.2cm !important;
+    text-align: left !important;
+  }
+
+  th {
+    background: #f0f0f0 !important;
+    font-weight: bold !important;
+    color: #000 !important;
+  }
+
+  /* Headers and titles */
+  .header,
+  .card-title {
+    color: #000 !important;
+    border-bottom: 1px solid #ccc !important;
+  }
+
+  /* Hide decorative elements */
+  .formula,
+  .hint,
+  .pill-stats,
+  .error,
+  .footer-note {
+    display: none !important;
+  }
+
+  /* Result display for outdoor */
+  .result-list,
+  .row {
+    border: 1px solid #ddd !important;
+    margin: 0.2cm 0 !important;
+    padding: 0.2cm !important;
+    background: #fafafa !important;
+  }
+
+  .row.highlight {
+    background: #eee !important;
+  }
+
+  /* Print-friendly unit and numeric display */
+  .area-m2,
+  .area-ft2,
+  .pack-unit,
+  .pack-value,
+  .result-label,
+  .result-value {
+    font-weight: bold !important;
+    color: #000 !important;
+    font-size: 1.1pt !important;
+  }
+
+  /* Page break control for multi-section */
+  .area-card,
+  .result-card {
+    page-break-inside: avoid !important;
+    margin-bottom: 0.5cm !important;
+  }
+
+  /* Footer and theme toggle */
+  .theme-toggle,
+  .topbar,
+  .brand,
+  .logo {
+    display: none !important;
+  }
+
+  /* Simplify spacing and layout */
+  .field-grid,
+  .areas-list,
+  .results-grid {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Inputs for print (show values) */
+  input[type="number"],
+  .number-display {
+    border: none !important;
+    padding: 0 !important;
+    background: transparent !important;
+    font-size: 0.9pt !important;
+  }
+}
