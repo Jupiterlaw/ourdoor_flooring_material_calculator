@@ -1,6 +1,6 @@
 # Outdoor Flooring Material Calculator (戶外木地板材料計算器)
 
-[![Calculator Suite](https://img.shields.io/badge/Calculator%20Suite-Outdoor%20Flooring-1B6B3A?style=flat-square)](https://github.com/Jupiterlaw/calculator-suite)
+[![Calculator Suite](https://img.shields.io/badge/Calculator%20Suite-Outdoor%20Flooring-01696F?style=flat-square)](https://github.com/Jupiterlaw/calculator-suite)
 
 戶外木地板及面通材料計算器 — 快速計算地板分段、總板數、面積對比，以及面通、底通與鋁角用量。
 
