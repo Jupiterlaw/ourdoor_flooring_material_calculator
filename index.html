@@ -6,19 +6,31 @@
   <title>Outdoor Wood Flooring Calculator</title>
   <style>
     :root, [data-theme="light"] {
-      --color-bg:#f7f6f2; --color-surface:#f9f8f5; --color-surface-2:#fbfbf9; --color-surface-offset:#f3f0ec;
-      --color-border:#d4d1ca; --color-divider:#dcd9d5; --color-text:#28251d; --color-text-muted:#7a7974;
-      --color-text-faint:#bab9b4; --color-text-inverse:#f9f8f4; --color-primary:#01696f; --color-primary-hover:#0c4e54;
-      --color-primary-highlight:#cedcd8; --color-error:#a12c7b; --shadow-sm:0 1px 2px rgba(0,0,0,.05); --shadow-md:0 12px 32px rgba(0,0,0,.08);
-      --radius-sm:.375rem; --radius-md:.5rem; --radius-lg:.75rem; --radius-xl:1rem; --space-2:.5rem; --space-3:.75rem;
+      --color-bg:#f4f1ec; --color-surface:#ffffff; --color-surface-2:#faf8f5; --color-surface-offset:#f3f0ec;
+      --color-border:#e2ddd4; --color-divider:#e2ddd4; --color-text:#2c2926; --color-text-muted:#6b6560;
+      --color-text-faint:#9b9590; --color-text-inverse:#ffffff; --color-primary:#2d5a4a; --color-primary-hover:#234839;
+      --color-primary-highlight:#e8f0ec; --color-error:#9b3b32; --shadow-sm:0 2px 8px rgba(44,41,38,.06); --shadow-md:0 4px 24px rgba(44,41,38,.08);
+      --radius-sm:.625rem; --radius-md:.75rem; --radius-lg:.875rem; --radius-xl:.875rem; --space-2:.5rem; --space-3:.75rem;
       --space-4:1rem; --space-5:1.25rem; --space-6:1.5rem; --space-8:2rem; --space-10:2.5rem; --text-xs:.75rem;
-      --text-sm:.95rem; --text-base:1rem; --text-lg:1.2rem; --text-xl:1.8rem; --font-display:Georgia, 'Times New Roman', serif; --font-body:system-ui, -apple-system, 'Segoe UI', Roboto, 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+      --text-sm:.95rem; --text-base:1rem; --text-lg:1.2rem; --text-xl:1.8rem; --font-display:"Segoe UI","PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif; --font-body:"Segoe UI","PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
     }
     [data-theme="dark"] {
-      --color-bg:#171614; --color-surface:#1c1b19; --color-surface-2:#201f1d; --color-surface-offset:#1d1c1a;
-      --color-border:#393836; --color-divider:#262523; --color-text:#cdccca; --color-text-muted:#979590; --color-text-faint:#6b6965;
-      --color-text-inverse:#2b2a28; --color-primary:#4f98a3; --color-primary-hover:#227f8b; --color-primary-highlight:#313b3b; --color-error:#d163a7;
-      --shadow-sm:0 1px 2px rgba(0,0,0,.25); --shadow-md:0 12px 32px rgba(0,0,0,.35);
+      --color-bg:#1a1917; --color-surface:#242322; --color-surface-2:#2a2928; --color-surface-offset:#2a2928;
+      --color-border:#3a3632; --color-divider:#3a3632; --color-text:#e8e4df; --color-text-muted:#9b9590; --color-text-faint:#6b6965;
+      --color-text-inverse:#ffffff; --color-primary:#4a8c73; --color-primary-hover:#3d7962; --color-primary-highlight:#2c3a35; --color-error:#c45b52;
+      --shadow-sm:0 2px 8px rgba(0,0,0,.25); --shadow-md:0 4px 24px rgba(0,0,0,.35);
+    }
+    /* CSS-only dark mode: honor the OS setting like the rest of the suite. The JS
+       toggle below sets [data-theme] which overrides this; the media query keeps dark
+       mode reachable without JS and matches flooring-calculator / joist_calculater. */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --color-bg:#1a1917; --color-surface:#242322; --color-surface-2:#2a2928; --color-surface-offset:#2a2928;
+        --color-border:#3a3632; --color-divider:#3a3632; --color-text:#e8e4df; --color-text-muted:#9b9590; --color-text-faint:#6b6965;
+        --color-text-inverse:#ffffff; --color-primary:#4a8c73; --color-primary-hover:#3d7962; --color-primary-highlight:#2c3a35; --color-error:#c45b52;
+        --shadow-sm:0 2px 8px rgba(0,0,0,.25); --shadow-md:0 4px 24px rgba(0,0,0,.35);
+      }
     }
     * { box-sizing: border-box; }
     body {
@@ -31,11 +43,11 @@
     }
     button,input { font:inherit; }
 
-    .shell {
-          max-width:480px;
-          margin:0 auto;
-          padding:clamp(1rem, 4vw, 2rem);
-        }
+    .app {
+      max-width:1180px;
+      margin:0 auto;
+      padding:var(--space-6);
+    }
 
     .topbar {
       display:flex;
@@ -91,7 +103,7 @@
     }
 
     .hero-card,
-    .panel {
+    .card {
       background:var(--color-surface);
       border:1px solid var(--color-border);
       border-radius:var(--radius-xl);
@@ -99,13 +111,13 @@
     }
 
     .hero-card {
-          padding:var(--space-6);
-          background:linear-gradient(180deg, var(--color-surface-2), var(--color-surface));
-        }
+      padding:var(--space-8);
+      background:var(--color-surface);
+    }
     .hero-card h2 {
       margin:0 0 var(--space-3);
       font-family:var(--font-display);
-      font-size:clamp(1.5rem, 5vw, 2rem);
+      font-size:clamp(2rem, 4vw, 3.2rem);
       max-width:none;
       line-height:1.02;
       font-weight:500;
@@ -118,16 +130,19 @@
     }
 
     .app-grid {
-          display:block;
-        }
+      display:grid;
+      grid-template-columns:minmax(320px,390px) 1fr;
+      gap:var(--space-5);
+      align-items:start;
+    }
 
-    .panel { padding:var(--space-5); }
-    .panel h3 {
+    .card { padding:var(--space-5); }
+    .card h3 {
       margin:0 0 var(--space-4);
       font-size:var(--text-lg);
     }
 
-    .form-grid { display:grid; gap:var(--space-4); }
+    .field-grid { display:grid; gap:var(--space-4); }
     .field { display:grid; gap:.45rem; }
     .field label { font-size:var(--text-sm); font-weight:600; }
     .field small { color:var(--color-text-muted); font-size:var(--text-xs); }
@@ -172,7 +187,7 @@
     }
     .number-inline input { flex:1; }
 
-    .actions {
+    .btn-row {
       display:flex;
       gap:var(--space-3);
       margin-top:var(--space-3);
@@ -228,6 +243,9 @@
     .row strong {
       font-variant-numeric:tabular-nums;
       text-align:right;
+      font-size:1.15rem;
+      font-weight:700;
+      color:var(--color-text);
     }
     .highlight { background:var(--color-primary-highlight); }
 
@@ -237,20 +255,26 @@
       font-size:var(--text-sm);
     }
 
-    @media (max-width: 480px) {
-          .number-inline { grid-template-columns:56px 1fr 56px; }
-          .actions { justify-content:stretch; }
-          .btn { flex:1; text-align:center; }
-          .hero-card,
-          .panel { border-radius:var(--radius-lg); }
-          .hero-card { padding:var(--space-6); }
-          .panel { padding:var(--space-4); }
-          .row { padding:.85rem 1rem; }
-        }
+    @media (max-width: 960px) {
+      .app-grid { grid-template-columns:1fr; }
+      .hero-card h2 { max-width:none; }
+      .app { padding:var(--space-4); }
+    }
+
+    @media (max-width: 768px) {
+      .number-inline { grid-template-columns:56px 1fr 56px; }
+      .btn-row { justify-content:stretch; }
+      .btn { flex:1; text-align:center; }
+      .hero-card,
+      .card { border-radius:var(--radius-lg); }
+      .hero-card { padding:var(--space-6); }
+      .card { padding:var(--space-4); }
+      .row { padding:.85rem 1rem; }
+    }
   </style>
 </head>
 <body>
-  <div class="shell">
+  <div class="app">
     <header class="topbar">
       <div class="brand">
         <div class="logo" aria-hidden="true">
@@ -275,12 +299,12 @@
     </section>
 
     <main class="app-grid">
-      <section class="panel" aria-labelledby="input-title">
+      <section class="card" aria-labelledby="input-title">
         <h3 id="input-title">輸入資料</h3>
-        <form id="calcForm" class="form-grid">
+        <form id="calcForm" class="field-grid">
 
           <div class="field">
-            <label for="spaceLength">空間長度 (mm)</label>
+            <label for="spaceLength">空間長度（毫米）</label>
             <div class="number-inline">
               <button type="button" data-target="spaceLength" data-step="-100">-100</button>
               <input id="spaceLength" type="number" value="5000" min="1" required>
@@ -289,7 +313,7 @@
           </div>
 
           <div class="field">
-            <label for="spaceWidth">空間闊度 (mm)</label>
+            <label for="spaceWidth">空間闊度（毫米）</label>
             <div class="number-inline">
               <button type="button" data-target="spaceWidth" data-step="-100">-100</button>
               <input id="spaceWidth" type="number" value="3000" min="1" required>
@@ -298,7 +322,7 @@
           </div>
 
           <div class="field">
-            <label for="boardLength">地板長度 (mm)</label>
+            <label for="boardLength">地板長度（毫米）</label>
             <div class="number-inline">
               <button type="button" data-target="boardLength" data-step="-50">-50</button>
               <input id="boardLength" type="number" value="2000" min="1" required>
@@ -307,7 +331,7 @@
           </div>
 
           <div class="field">
-            <label for="boardWidth">地板闊度 (mm)</label>
+            <label for="boardWidth">地板闊度（毫米）</label>
             <div class="number-inline">
               <button type="button" data-target="boardWidth" data-step="-10">-10</button>
               <input id="boardWidth" type="number" value="140" min="1" required>
@@ -316,7 +340,7 @@
           </div>
 
           <div class="field">
-            <label for="maxSegmentLength">最大等分規則 (mm)</label>
+            <label for="maxSegmentLength">最大等分規則（毫米）</label>
             <div class="number-inline">
               <button type="button" data-target="maxSegmentLength" data-step="-50">-50</button>
               <input id="maxSegmentLength" type="number" value="400" min="1" required>
@@ -326,7 +350,7 @@
           </div>
 
           <div class="field">
-            <label for="battenLength">每枝面通長度 (mm)</label>
+            <label for="battenLength">每枝面通長度（毫米）</label>
             <div class="number-inline">
               <button type="button" data-target="battenLength" data-step="-100">-100</button>
               <input id="battenLength" type="number" value="2000" min="1" required>
@@ -346,7 +370,7 @@
           </div>
 
           <div class="field">
-            <label for="aluminumHeight">鋁角高度 (mm)</label>
+            <label for="aluminumHeight">鋁角高度（毫米）</label>
             <div class="number-inline">
               <button type="button" data-target="aluminumHeight" data-step="-10">-10</button>
               <input id="aluminumHeight" type="number" value="50" min="1">
@@ -355,7 +379,7 @@
             <small>僅在啟用鋁角時使用。</small>
           </div>
 
-          <div class="actions">
+          <div class="btn-row">
             <button class="btn btn-primary" type="submit">計算</button>
             <button class="btn btn-secondary" type="reset">重設</button>
           </div>
@@ -363,7 +387,7 @@
         </form>
       </section>
 
-      <section class="panel" aria-labelledby="result-title">
+      <section class="card" aria-labelledby="result-title">
         <h3 id="result-title">計算結果</h3>
         <div class="results">
           <section class="result-group">
@@ -528,9 +552,11 @@
       const totalAluminumLengthM = input.aluminumEnabled ? result.totalAluminumLength / 1000 : null;
 
       document.getElementById('spaceArea').textContent = formatNumber(spaceAreaFt2, 2) + ' ft² / ' + formatNumber(spaceAreaM2, 2) + ' m²';
-      document.getElementById('boardArea').textContent = formatNumber(result.boardArea) + ' mm²';
+      const boardAreaM2 = result.boardArea / 1000000;
+      document.getElementById('boardArea').textContent = formatNumber(boardAreaM2, 4) + ' m² / ' + formatNumber(boardAreaM2 * 10.7639104167, 4) + ' ft²';
       document.getElementById('totalBoardArea').textContent = formatNumber(totalBoardAreaM2, 2) + ' m²';
-      document.getElementById('areaDifference').textContent = formatNumber(result.areaDifference) + ' mm²';
+      const areaDiffM2 = result.areaDifference / 1000000;
+      document.getElementById('areaDifference').textContent = formatNumber(areaDiffM2, 2) + ' m² / ' + formatNumber(areaDiffM2 * 10.7639104167, 2) + ' ft²';
 
       document.getElementById('battenRows').textContent = formatNumber(result.battenRows) + ' 行';
       document.getElementById('totalBattenLength').textContent = formatNumber(totalBattenLengthM, 2) + ' m';
