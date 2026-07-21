@@ -32,10 +32,10 @@
     button,input { font:inherit; }
 
     .shell {
-      max-width:1180px;
-      margin:0 auto;
-      padding:var(--space-6);
-    }
+          max-width:480px;
+          margin:0 auto;
+          padding:clamp(1rem, 4vw, 2rem);
+        }
 
     .topbar {
       display:flex;
@@ -99,13 +99,13 @@
     }
 
     .hero-card {
-      padding:var(--space-8);
-      background:linear-gradient(180deg, var(--color-surface-2), var(--color-surface));
-    }
+          padding:var(--space-6);
+          background:linear-gradient(180deg, var(--color-surface-2), var(--color-surface));
+        }
     .hero-card h2 {
       margin:0 0 var(--space-3);
       font-family:var(--font-display);
-      font-size:clamp(2rem, 4vw, 3.2rem);
+      font-size:clamp(1.5rem, 5vw, 2rem);
       max-width:none;
       line-height:1.02;
       font-weight:500;
@@ -118,11 +118,8 @@
     }
 
     .app-grid {
-      display:grid;
-      grid-template-columns:minmax(320px,390px) 1fr;
-      gap:var(--space-5);
-      align-items:start;
-    }
+          display:block;
+        }
 
     .panel { padding:var(--space-5); }
     .panel h3 {
@@ -240,22 +237,16 @@
       font-size:var(--text-sm);
     }
 
-    @media (max-width: 960px) {
-      .app-grid { grid-template-columns:1fr; }
-      .hero-card h2 { max-width:none; }
-      .shell { padding:var(--space-4); }
-    }
-
-    @media (max-width: 768px) {
-      .number-inline { grid-template-columns:56px 1fr 56px; }
-      .actions { justify-content:stretch; }
-      .btn { flex:1; text-align:center; }
-      .hero-card,
-      .panel { border-radius:var(--radius-lg); }
-      .hero-card { padding:var(--space-6); }
-      .panel { padding:var(--space-4); }
-      .row { padding:.85rem 1rem; }
-    }
+    @media (max-width: 480px) {
+          .number-inline { grid-template-columns:56px 1fr 56px; }
+          .actions { justify-content:stretch; }
+          .btn { flex:1; text-align:center; }
+          .hero-card,
+          .panel { border-radius:var(--radius-lg); }
+          .hero-card { padding:var(--space-6); }
+          .panel { padding:var(--space-4); }
+          .row { padding:.85rem 1rem; }
+        }
   </style>
 </head>
 <body>
