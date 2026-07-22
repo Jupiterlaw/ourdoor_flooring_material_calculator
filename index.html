@@ -1,447 +1,601 @@
 <!DOCTYPE html>
 <html lang="zh-Hant" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Outdoor Wood Flooring Calculator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>戶外木地板計算器</title>
   <style>
+    /* ===== Design Tokens ===== */
     :root, [data-theme="light"] {
-      --color-bg:#f4f1ec; --color-surface:#ffffff; --color-surface-2:#faf8f5; --color-surface-offset:#f3f0ec;
-      --color-border:#e2ddd4; --color-divider:#e2ddd4; --color-text:#2c2926; --color-text-muted:#6b6560;
-      --color-text-faint:#9b9590; --color-text-inverse:#ffffff; --color-primary:#2d5a4a; --color-primary-hover:#234839;
-      --color-primary-highlight:#e8f0ec; --color-error:#9b3b32; --shadow-sm:0 2px 8px rgba(44,41,38,.06); --shadow-md:0 4px 24px rgba(44,41,38,.08);
-      --radius-sm:.625rem; --radius-md:.75rem; --radius-lg:.875rem; --radius-xl:.875rem; --space-2:.5rem; --space-3:.75rem;
-      --space-4:1rem; --space-5:1.25rem; --space-6:1.5rem; --space-8:2rem; --space-10:2.5rem; --text-xs:.75rem;
-      --text-sm:.95rem; --text-base:1rem; --text-lg:1.2rem; --text-xl:1.8rem; --font-display:"Segoe UI","PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif; --font-body:"Segoe UI","PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
+      --bg: #f4f1ec;
+      --surface: #ffffff;
+      --surface-hover: #faf8f5;
+      --border: #e2ddd4;
+      --border-light: #ede9e2;
+      --text: #2c2926;
+      --text-muted: #7d7770;
+      --text-faint: #a39d97;
+      --accent: #2d5a4a;
+      --accent-hover: #234839;
+      --accent-soft: rgba(45, 90, 74, 0.10);
+      --accent-glow: rgba(45, 90, 74, 0.06);
+      --danger: #b0413a;
+      --danger-soft: rgba(176, 65, 58, 0.08);
+      --shadow-sm: 0 1px 3px rgba(44, 41, 38, 0.06), 0 1px 2px rgba(44, 41, 38, 0.04);
+      --shadow-md: 0 4px 16px rgba(44, 41, 38, 0.07), 0 2px 6px rgba(44, 41, 38, 0.04);
+      --shadow-lg: 0 8px 32px rgba(44, 41, 38, 0.08);
+      --radius: 14px;
+      --radius-sm: 10px;
+      --radius-xs: 8px;
+      --radius-full: 9999px;
+      --font: system-ui, -apple-system, "Segoe UI", "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
     }
     [data-theme="dark"] {
-      --color-bg:#1a1917; --color-surface:#242322; --color-surface-2:#2a2928; --color-surface-offset:#2a2928;
-      --color-border:#3a3632; --color-divider:#3a3632; --color-text:#e8e4df; --color-text-muted:#9b9590; --color-text-faint:#6b6965;
-      --color-text-inverse:#ffffff; --color-primary:#4a8c73; --color-primary-hover:#3d7962; --color-primary-highlight:#2c3a35; --color-error:#c45b52;
-      --shadow-sm:0 2px 8px rgba(0,0,0,.25); --shadow-md:0 4px 24px rgba(0,0,0,.35);
+      --bg: #1a1917;
+      --surface: #242322;
+      --surface-hover: #2a2928;
+      --border: #3a3632;
+      --border-light: #322e2a;
+      --text: #e8e4df;
+      --text-muted: #9b9590;
+      --text-faint: #6b6965;
+      --accent: #4a8c73;
+      --accent-hover: #3d7962;
+      --accent-soft: rgba(74, 140, 115, 0.15);
+      --accent-glow: rgba(74, 140, 115, 0.08);
+      --danger: #c45b52;
+      --danger-soft: rgba(196, 91, 82, 0.12);
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.2);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.25);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
     }
-    /* CSS-only dark mode: honor the OS setting like the rest of the suite. The JS
-       toggle below sets [data-theme] which overrides this; the media query keeps dark
-       mode reachable without JS and matches flooring-calculator / joist_calculater. */
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
         color-scheme: dark;
-        --color-bg:#1a1917; --color-surface:#242322; --color-surface-2:#2a2928; --color-surface-offset:#2a2928;
-        --color-border:#3a3632; --color-divider:#3a3632; --color-text:#e8e4df; --color-text-muted:#9b9590; --color-text-faint:#6b6965;
-        --color-text-inverse:#ffffff; --color-primary:#4a8c73; --color-primary-hover:#3d7962; --color-primary-highlight:#2c3a35; --color-error:#c45b52;
-        --shadow-sm:0 2px 8px rgba(0,0,0,.25); --shadow-md:0 4px 24px rgba(0,0,0,.35);
+        --bg: #1a1917;
+        --surface: #242322;
+        --surface-hover: #2a2928;
+        --border: #3a3632;
+        --border-light: #322e2a;
+        --text: #e8e4df;
+        --text-muted: #9b9590;
+        --text-faint: #6b6965;
+        --accent: #4a8c73;
+        --accent-hover: #3d7962;
+        --accent-soft: rgba(74, 140, 115, 0.15);
+        --accent-glow: rgba(74, 140, 115, 0.08);
+        --danger: #c45b52;
+        --danger-soft: rgba(196, 91, 82, 0.12);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.2);
+        --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.25);
+        --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
       }
     }
-    * { box-sizing: border-box; }
+
+    /* ===== Reset ===== */
+    *, *::before, *::after { box-sizing: border-box; }
     body {
-      margin:0;
-      min-height:100vh;
-      font-family:var(--font-body);
-      background:var(--color-bg);
-      color:var(--color-text);
-      line-height:1.5;
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
-    button,input { font:inherit; }
+    button, input, select { font: inherit; }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type="number"] { -moz-appearance: textfield; }
 
+    /* ===== Layout ===== */
     .app {
-      max-width:1180px;
-      margin:0 auto;
-      padding:var(--space-6);
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 3rem;
     }
 
+    /* ===== Top Bar ===== */
     .topbar {
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:var(--space-4);
-      margin-bottom:var(--space-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
     }
-    .brand { display:flex; align-items:center; gap:var(--space-3); }
-    .logo {
-      width:42px; height:42px; border-radius:12px;
-      background:var(--color-surface);
-      border:1px solid var(--color-border);
-      display:grid; place-items:center;
-      box-shadow:var(--shadow-sm);
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
     }
-    .brand h1 {
-      margin:0;
-      font-family:var(--font-display);
-      font-size:var(--text-xl);
-      line-height:1;
-      font-weight:500;
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-xs);
+      background: var(--accent-soft);
+      border: 1px solid var(--border-light);
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      flex-shrink: 0;
+      transition: background 0.2s, border-color 0.2s;
     }
-    .brand p {
-      margin:.3rem 0 0;
-      color:var(--color-text-muted);
-      font-size:var(--text-sm);
+    .brand-text h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 650;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+    .brand-text p {
+      margin: 0.05rem 0 0;
+      font-size: 0.8rem;
+      color: var(--text-muted);
     }
     .theme-toggle {
-      min-width:44px;
-      min-height:44px;
-      border-radius:999px;
-      border:1px solid var(--color-border);
-      background:var(--color-surface);
-      color:var(--color-text);
-      display:grid;
-      place-items:center;
-      box-shadow:var(--shadow-sm);
-      cursor:pointer;
-      transition:background .2s ease, border-color .2s ease, transform .12s ease;
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-light);
+      background: var(--surface);
+      color: var(--text-muted);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+      box-shadow: var(--shadow-sm);
+      flex-shrink: 0;
     }
     .theme-toggle:hover {
-      background:var(--color-surface-offset);
-      border-color:var(--color-text-faint);
+      background: var(--surface-hover);
+      border-color: var(--border);
+      color: var(--text);
     }
-    .theme-toggle:active {
-      transform:scale(.97);
-    }
+    .theme-toggle:active { transform: scale(0.92); }
 
+    /* ===== Hero ===== */
     .hero {
-      display:block;
-      margin-bottom:var(--space-6);
+      margin-bottom: 1.5rem;
+    }
+    .hero h2 {
+      margin: 0 0 0.4rem;
+      font-size: 1.35rem;
+      font-weight: 650;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+    .hero p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
     }
 
-    .hero-card,
+    /* ===== Card ===== */
     .card {
-      background:var(--color-surface);
-      border:1px solid var(--color-border);
-      border-radius:var(--radius-xl);
-      box-shadow:var(--shadow-md);
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .card-title {
+      margin: 0 0 1rem;
+      font-size: 0.95rem;
+      font-weight: 650;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .card-title::before {
+      content: "";
+      width: 3px;
+      height: 1.1em;
+      background: var(--accent);
+      border-radius: 2px;
+      flex-shrink: 0;
     }
 
-    .hero-card {
-      padding:var(--space-8);
-      background:var(--color-surface);
+    /* ===== Form Fields ===== */
+    .field-grid {
+      display: grid;
+      gap: 0.85rem;
     }
-    .hero-card h2 {
-      margin:0 0 var(--space-3);
-      font-family:var(--font-display);
-      font-size:clamp(2rem, 4vw, 3.2rem);
-      max-width:none;
-      line-height:1.02;
-      font-weight:500;
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
     }
-    .hero-card p {
-      margin:0;
-      max-width:72ch;
-      color:var(--color-text-muted);
-      font-size:var(--text-base);
+    .field label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
     }
-
-    .app-grid {
-      display:grid;
-      grid-template-columns:minmax(320px,390px) 1fr;
-      gap:var(--space-5);
-      align-items:start;
+    .field small {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.05rem;
     }
 
-    .card { padding:var(--space-5); }
-    .card h3 {
-      margin:0 0 var(--space-4);
-      font-size:var(--text-lg);
+    /* Checkbox field */
+    .field-check {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+    }
+    .field-check input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+      margin: 0;
+      cursor: pointer;
+    }
+    .field-check label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .field-check + small {
+      margin-top: -0.3rem;
+      margin-bottom: 0.25rem;
     }
 
-    .field-grid { display:grid; gap:var(--space-4); }
-    .field { display:grid; gap:.45rem; }
-    .field label { font-size:var(--text-sm); font-weight:600; }
-    .field small { color:var(--color-text-muted); font-size:var(--text-xs); }
-
-    .field input {
-      min-height:48px;
-      border-radius:var(--radius-md);
-      border:1px solid var(--color-border);
-      background:var(--color-surface-2);
-      padding:0 .9rem;
-      color:var(--color-text);
-    }
-    .field input[type="checkbox"] {
-      width:auto;
-      height:auto;
-      margin-right:.5rem;
-      min-height:auto;
-      padding:0;
-    }
-
+    /* ===== Number Inline ===== */
     .number-inline {
-      display:grid;
-      grid-template-columns:64px 1fr 64px;
-      gap:.5rem;
-      align-items:center;
+      display: grid;
+      grid-template-columns: 50px 1fr 50px;
+      gap: 0.35rem;
+      align-items: center;
     }
     .number-inline button {
-      min-width:64px;
-      min-height:44px;
-      border-radius:999px;
-      border:1px solid var(--color-border);
-      background:var(--color-surface-2);
-      color:var(--color-text);
-      transition:background .2s ease, border-color .2s ease, transform .12s ease;
+      min-height: 42px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-light);
+      background: var(--surface-hover);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.08s;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
     }
     .number-inline button:hover {
-      background:var(--color-surface-offset);
-      border-color:var(--color-text-faint);
+      background: var(--surface);
+      border-color: var(--border);
+      color: var(--text);
     }
-    .number-inline button:active {
-      transform:scale(.98);
+    .number-inline button:active { transform: scale(0.93); }
+    .number-inline input {
+      min-height: 42px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+      background: var(--bg);
+      padding: 0 0.5rem;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: border-color 0.15s, box-shadow 0.15s;
     }
-    .number-inline input { flex:1; }
+    .number-inline input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
 
+    /* ===== Buttons ===== */
     .btn-row {
-      display:flex;
-      gap:var(--space-3);
-      margin-top:var(--space-3);
-      flex-wrap:wrap;
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 0.25rem;
     }
     .btn {
-      min-height:48px;
-      padding:0 1rem;
-      border-radius:999px;
-      border:1px solid transparent;
-      font-weight:600;
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      min-height: 46px;
+      padding: 0.5rem 1rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background 0.15s, transform 0.08s, box-shadow 0.15s;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
     }
-    .btn-primary { background:var(--color-primary); color:var(--color-text-inverse); }
-    .btn-primary:hover { background:var(--color-primary-hover); }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 1px 3px var(--accent-glow);
+    }
+    .btn-primary:hover { background: var(--accent-hover); }
     .btn-secondary {
-      background:var(--color-surface-2);
-      border-color:var(--color-border);
-      color:var(--color-text);
+      background: var(--surface-hover);
+      border: 1px solid var(--border-light);
+      color: var(--text-muted);
+    }
+    .btn-secondary:hover {
+      background: var(--surface);
+      border-color: var(--border);
+      color: var(--text);
     }
 
+    /* ===== Message ===== */
     .message {
-      min-height:24px;
-      font-size:var(--text-sm);
-      margin-top:var(--space-3);
-      color:var(--color-error);
+      min-height: 1.25rem;
+      font-size: 0.85rem;
+      color: var(--danger);
+      margin-top: 0.25rem;
     }
 
-    .results {
-      display:grid;
-      gap:var(--space-4);
+    /* ===== Results ===== */
+    .result-list {
+      display: grid;
     }
     .result-group {
-      border:1px solid var(--color-border);
-      border-radius:var(--radius-lg);
-      overflow:hidden;
-      background:var(--color-surface-2);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+      background: var(--bg);
     }
+    .result-group:last-child { margin-bottom: 0; }
     .result-group header {
-      padding:var(--space-3) var(--space-5);
-      border-bottom:1px solid var(--color-divider);
-      font-weight:700;
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid var(--border-light);
+      font-weight: 650;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      letter-spacing: 0.01em;
     }
-    .result-list { display:grid; }
     .row {
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:var(--space-4);
-      padding:.9rem var(--space-5);
-      border-bottom:1px solid var(--color-divider);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.75rem;
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--border-light);
+      align-items: center;
     }
-    .row:last-child { border-bottom:none; }
-    .row span { color:var(--color-text-muted); }
+    .row:last-child { border-bottom: none; }
+    .row span {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
     .row strong {
-      font-variant-numeric:tabular-nums;
-      text-align:right;
-      font-size:1.15rem;
-      font-weight:700;
-      color:var(--color-text);
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
     }
-    .highlight { background:var(--color-primary-highlight); }
+    .row.highlight {
+      background: var(--accent-glow);
+    }
+    .row.highlight strong { color: var(--accent); }
 
     .footer-note {
-      margin-top:var(--space-4);
-      color:var(--color-text-muted);
-      font-size:var(--text-sm);
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      background: var(--accent-glow);
+      border-radius: var(--radius-xs);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.6;
     }
 
-    @media (max-width: 960px) {
-      .app-grid { grid-template-columns:1fr; }
-      .hero-card h2 { max-width:none; }
-      .app { padding:var(--space-4); }
+    /* ===== Print ===== */
+    @media print {
+      body { background: #fff; color: #000; }
+      .card { box-shadow: none; border: 1px solid #ddd; }
+      .theme-toggle, .number-inline button, .btn { display: none !important; }
+      input { border-color: #ccc; background: #fafafa; }
+      .result-group { background: #fff; border-color: #ddd; }
+      .row.highlight { background: #f0f7f3; }
+      .row.highlight strong { color: #2d5a4a; }
+      .footer-note { display: none; }
     }
 
-    @media (max-width: 768px) {
-      .number-inline { grid-template-columns:56px 1fr 56px; }
-      .btn-row { justify-content:stretch; }
-      .btn { flex:1; text-align:center; }
-      .hero-card,
-      .card { border-radius:var(--radius-lg); }
-      .hero-card { padding:var(--space-6); }
-      .card { padding:var(--space-4); }
-      .row { padding:.85rem 1rem; }
+    /* ===== Responsive ===== */
+    @media (max-width: 480px) {
+      .app { padding: 1rem 0.75rem 2rem; }
+      .card { padding: 1rem; border-radius: var(--radius-sm); }
+      .number-inline { grid-template-columns: 44px 1fr 44px; }
+      .btn-row { gap: 0.4rem; }
+      .row { padding: 0.55rem 0.85rem; }
+    }
+
+    @media (min-width: 768px) {
+      .app { padding: 2.5rem 1rem 4rem; }
+      .card { padding: 1.5rem; }
     }
   </style>
 </head>
 <body>
   <div class="app">
+    <!-- Top Bar -->
     <header class="topbar">
       <div class="brand">
-        <div class="logo" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-label="Flooring calculator logo">
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="5" width="18" height="14" rx="2"></rect>
             <path d="M8 5v14M14 5v14M3 10h18M3 14h18"></path>
           </svg>
         </div>
-        <div>
-          <h1>Flooring MVP</h1>
-          <p>戶外木地板 + 面通材料計算器</p>
+        <div class="brand-text">
+          <h1>木地板計算器</h1>
+          <p>戶外木地板 + 面通材料計算</p>
         </div>
       </div>
-      <button class="theme-toggle" data-theme-toggle aria-label="Switch theme"></button>
+      <button class="theme-toggle" data-theme-toggle aria-label="切換深色模式"></button>
     </header>
 
+    <!-- Hero -->
     <section class="hero">
-      <article class="hero-card">
-        <h2>地板數量與面通數量一齊計</h2>
-        <p>此版本移除損耗率輸入，集中做好 MVP 核心：按最大等分規則計地板分段、總板數、面積對比，再加上面通、底通與鋁角。</p>
-      </article>
+      <h2>地板與面通數量一鍵計算</h2>
+      <p>按最大等分規則計地板分段、總板數、面積對比，再加上面通、底通與鋁角用量。</p>
     </section>
 
-    <main class="app-grid">
-      <section class="card" aria-labelledby="input-title">
-        <h3 id="input-title">輸入資料</h3>
-        <form id="calcForm" class="field-grid">
+    <!-- Input Card -->
+    <section class="card" aria-labelledby="input-title">
+      <h3 class="card-title" id="input-title">輸入資料</h3>
+      <form id="calcForm" class="field-grid">
 
-          <div class="field">
-            <label for="spaceLength">空間長度（毫米）</label>
-            <div class="number-inline">
-              <button type="button" data-target="spaceLength" data-step="-100">-100</button>
-              <input id="spaceLength" type="number" value="5000" min="1" required>
-              <button type="button" data-target="spaceLength" data-step="100">+100</button>
-            </div>
+        <div class="field">
+          <label for="spaceLength">空間長度（mm）</label>
+          <div class="number-inline">
+            <button type="button" data-target="spaceLength" data-step="-100">−100</button>
+            <input id="spaceLength" type="number" value="5000" min="1" required>
+            <button type="button" data-target="spaceLength" data-step="100">+100</button>
           </div>
-
-          <div class="field">
-            <label for="spaceWidth">空間闊度（毫米）</label>
-            <div class="number-inline">
-              <button type="button" data-target="spaceWidth" data-step="-100">-100</button>
-              <input id="spaceWidth" type="number" value="3000" min="1" required>
-              <button type="button" data-target="spaceWidth" data-step="100">+100</button>
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="boardLength">地板長度（毫米）</label>
-            <div class="number-inline">
-              <button type="button" data-target="boardLength" data-step="-50">-50</button>
-              <input id="boardLength" type="number" value="2000" min="1" required>
-              <button type="button" data-target="boardLength" data-step="50">+50</button>
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="boardWidth">地板闊度（毫米）</label>
-            <div class="number-inline">
-              <button type="button" data-target="boardWidth" data-step="-10">-10</button>
-              <input id="boardWidth" type="number" value="140" min="1" required>
-              <button type="button" data-target="boardWidth" data-step="10">+10</button>
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="maxSegmentLength">最大等分規則（毫米）</label>
-            <div class="number-inline">
-              <button type="button" data-target="maxSegmentLength" data-step="-50">-50</button>
-              <input id="maxSegmentLength" type="number" value="400" min="1" required>
-              <button type="button" data-target="maxSegmentLength" data-step="50">+50</button>
-            </div>
-            <small>每個等分不可超過此數值。</small>
-          </div>
-
-          <div class="field">
-            <label for="battenLength">每枝面通長度（毫米）</label>
-            <div class="number-inline">
-              <button type="button" data-target="battenLength" data-step="-100">-100</button>
-              <input id="battenLength" type="number" value="2000" min="1" required>
-              <button type="button" data-target="battenLength" data-step="100">+100</button>
-            </div>
-            <small>用於計算總面通長度需要多少支面通。</small>
-          </div>
-
-          <div class="field">
-            <label><input id="bottomBattenEnabled" type="checkbox"> 啟用底通</label>
-            <small>勾選後顯示底通行數、底通總長度與底通支數。</small>
-          </div>
-
-          <div class="field">
-            <label><input id="aluminumEnabled" type="checkbox"> 啟用鋁角</label>
-            <small>勾選後才計算鋁角總長度。</small>
-          </div>
-
-          <div class="field">
-            <label for="aluminumHeight">鋁角高度（毫米）</label>
-            <div class="number-inline">
-              <button type="button" data-target="aluminumHeight" data-step="-10">-10</button>
-              <input id="aluminumHeight" type="number" value="50" min="1">
-              <button type="button" data-target="aluminumHeight" data-step="10">+10</button>
-            </div>
-            <small>僅在啟用鋁角時使用。</small>
-          </div>
-
-          <div class="btn-row">
-            <button class="btn btn-primary" type="submit">計算</button>
-            <button class="btn btn-secondary" type="reset">重設</button>
-          </div>
-          <div id="message" class="message" aria-live="polite"></div>
-        </form>
-      </section>
-
-      <section class="card" aria-labelledby="result-title">
-        <h3 id="result-title">計算結果</h3>
-        <div class="results">
-          <section class="result-group">
-            <header>地板結構結果</header>
-            <div class="result-list">
-              <div class="row"><span>每板等分數</span><strong id="segmentPerBoard">-</strong></div>
-              <div class="row"><span>每段實際長度</span><strong id="segmentLength">-</strong></div>
-              <div class="row"><span>每行需要等分數</span><strong id="segmentsPerRow">-</strong></div>
-              <div class="row"><span>總行數</span><strong id="totalRows">-</strong></div>
-              <div class="row"><span>總等分數</span><strong id="totalSegments">-</strong></div>
-              <div class="row highlight"><span>總地板件數</span><strong id="totalBoards">-</strong></div>
-            </div>
-          </section>
-
-          <section class="result-group">
-            <header>面積對比</header>
-            <div class="result-list">
-              <div class="row"><span>空間總面積</span><strong id="spaceArea">-</strong></div>
-              <div class="row"><span>單件地板面積</span><strong id="boardArea">-</strong></div>
-              <div class="row"><span>總地板面積</span><strong id="totalBoardArea">-</strong></div>
-              <div class="row highlight"><span>面積差</span><strong id="areaDifference">-</strong></div>
-            </div>
-          </section>
-
-          <section class="result-group">
-            <header>面通數量</header>
-            <div class="result-list">
-              <div class="row"><span>面通行數</span><strong id="battenRows">-</strong></div>
-              <div class="row"><span>面通總長度</span><strong id="totalBattenLength">-</strong></div>
-              <div class="row highlight"><span>所需面通支數</span><strong id="totalBattens">-</strong></div>
-            </div>
-          </section>
-
-          <section class="result-group">
-            <header>底通</header>
-            <div class="result-list">
-              <div class="row"><span>底通行數</span><strong id="bottomBattenRows">-</strong></div>
-              <div class="row"><span>底通總長度</span><strong id="bottomBattenLength">-</strong></div>
-              <div class="row highlight"><span>底通支數</span><strong id="bottomBattens">-</strong></div>
-            </div>
-          </section>
-
-          <section class="result-group">
-            <header>鋁角</header>
-            <div class="result-list">
-              <div class="row highlight"><span>鋁角總長度</span><strong id="aluminumLength">-</strong></div>
-            </div>
-          </section>
         </div>
-        <p class="footer-note">
-          面通計算：地板每行等分數 + 1 = 面通行數；面通行數 × 空間闊度 = 面通總長度；面通總長度 ÷ 每枝面通長度後向上取整 = 所需面通支數。
-        </p>
-      </section>
-    </main>
+
+        <div class="field">
+          <label for="spaceWidth">空間闊度（mm）</label>
+          <div class="number-inline">
+            <button type="button" data-target="spaceWidth" data-step="-100">−100</button>
+            <input id="spaceWidth" type="number" value="3000" min="1" required>
+            <button type="button" data-target="spaceWidth" data-step="100">+100</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="boardLength">地板長度（mm）</label>
+          <div class="number-inline">
+            <button type="button" data-target="boardLength" data-step="-50">−50</button>
+            <input id="boardLength" type="number" value="2000" min="1" required>
+            <button type="button" data-target="boardLength" data-step="50">+50</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="boardWidth">地板闊度（mm）</label>
+          <div class="number-inline">
+            <button type="button" data-target="boardWidth" data-step="-10">−10</button>
+            <input id="boardWidth" type="number" value="140" min="1" required>
+            <button type="button" data-target="boardWidth" data-step="10">+10</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="maxSegmentLength">最大等分規則（mm）</label>
+          <div class="number-inline">
+            <button type="button" data-target="maxSegmentLength" data-step="-50">−50</button>
+            <input id="maxSegmentLength" type="number" value="400" min="1" required>
+            <button type="button" data-target="maxSegmentLength" data-step="50">+50</button>
+          </div>
+          <small>每個等分不可超過此數值</small>
+        </div>
+
+        <div class="field">
+          <label for="battenLength">每枝面通長度（mm）</label>
+          <div class="number-inline">
+            <button type="button" data-target="battenLength" data-step="-100">−100</button>
+            <input id="battenLength" type="number" value="2000" min="1" required>
+            <button type="button" data-target="battenLength" data-step="100">+100</button>
+          </div>
+          <small>用於計算總面通長度需要多少支面通</small>
+        </div>
+
+        <div class="field field-check">
+          <input id="bottomBattenEnabled" type="checkbox">
+          <label for="bottomBattenEnabled">啟用底通</label>
+        </div>
+        <small>勾選後顯示底通行數、底通總長度與底通支數</small>
+
+        <div class="field field-check">
+          <input id="aluminumEnabled" type="checkbox">
+          <label for="aluminumEnabled">啟用鋁角</label>
+        </div>
+        <small>勾選後才計算鋁角總長度</small>
+
+        <div class="field">
+          <label for="aluminumHeight">鋁角高度（mm）</label>
+          <div class="number-inline">
+            <button type="button" data-target="aluminumHeight" data-step="-10">−10</button>
+            <input id="aluminumHeight" type="number" value="50" min="1">
+            <button type="button" data-target="aluminumHeight" data-step="10">+10</button>
+          </div>
+          <small>僅在啟用鋁角時使用</small>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn btn-primary" type="submit">計算</button>
+          <button class="btn btn-secondary" type="reset">重設</button>
+        </div>
+        <div id="message" class="message" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <!-- Results Card -->
+    <section class="card" aria-labelledby="result-title">
+      <h3 class="card-title" id="result-title">計算結果</h3>
+      <div class="results">
+        <div class="result-group">
+          <header>地板結構</header>
+          <div class="result-list">
+            <div class="row"><span>每板等分數</span><strong id="segmentPerBoard">-</strong></div>
+            <div class="row"><span>每段實際長度</span><strong id="segmentLength">-</strong></div>
+            <div class="row"><span>每行需要等分數</span><strong id="segmentsPerRow">-</strong></div>
+            <div class="row"><span>總行數</span><strong id="totalRows">-</strong></div>
+            <div class="row"><span>總等分數</span><strong id="totalSegments">-</strong></div>
+            <div class="row highlight"><span>總地板件數</span><strong id="totalBoards">-</strong></div>
+          </div>
+        </div>
+
+        <div class="result-group">
+          <header>面積對比</header>
+          <div class="result-list">
+            <div class="row"><span>空間總面積</span><strong id="spaceArea">-</strong></div>
+            <div class="row"><span>單件地板面積</span><strong id="boardArea">-</strong></div>
+            <div class="row"><span>總地板面積</span><strong id="totalBoardArea">-</strong></div>
+            <div class="row highlight"><span>面積差</span><strong id="areaDifference">-</strong></div>
+          </div>
+        </div>
+
+        <div class="result-group">
+          <header>面通數量</header>
+          <div class="result-list">
+            <div class="row"><span>面通行數</span><strong id="battenRows">-</strong></div>
+            <div class="row"><span>面通總長度</span><strong id="totalBattenLength">-</strong></div>
+            <div class="row highlight"><span>所需面通支數</span><strong id="totalBattens">-</strong></div>
+          </div>
+        </div>
+
+        <div class="result-group">
+          <header>底通</header>
+          <div class="result-list">
+            <div class="row"><span>底通行數</span><strong id="bottomBattenRows">-</strong></div>
+            <div class="row"><span>底通總長度</span><strong id="bottomBattenLength">-</strong></div>
+            <div class="row highlight"><span>底通支數</span><strong id="bottomBattens">-</strong></div>
+          </div>
+        </div>
+
+        <div class="result-group">
+          <header>鋁角</header>
+          <div class="result-list">
+            <div class="row highlight"><span>鋁角總長度</span><strong id="aluminumLength">-</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-note">
+        面通計算方式：地板每行等分數 + 1 = 面通行數；面通行數 × 空間闊度 = 面通總長度；面通總長度 ÷ 每枝面通長度後向上取整 = 所需面通支數
+      </div>
+    </section>
   </div>
 
   <script>
