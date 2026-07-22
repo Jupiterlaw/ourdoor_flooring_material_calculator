@@ -3,273 +3,600 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Outdoor Wood Flooring Calculator</title>
+  <title>戶外木地板 + 面通材料計算器</title>
+  <link rel="stylesheet" href="print.css" media="print" />
   <style>
-    :root, [data-theme="light"] {
-      --color-bg:#f4f1ec; --color-surface:#ffffff; --color-surface-2:#faf8f5; --color-surface-offset:#f3f0ec;
-      --color-border:#e2ddd4; --color-divider:#e2ddd4; --color-text:#2c2926; --color-text-muted:#6b6560;
-      --color-text-faint:#9b9590; --color-text-inverse:#ffffff; --color-primary:#2d5a4a; --color-primary-hover:#234839;
-      --color-primary-highlight:#e8f0ec; --color-error:#9b3b32; --shadow-sm:0 2px 8px rgba(44,41,38,.06); --shadow-md:0 4px 24px rgba(44,41,38,.08);
-      --radius-sm:.625rem; --radius-md:.75rem; --radius-lg:.875rem; --radius-xl:.875rem; --space-2:.5rem; --space-3:.75rem;
-      --space-4:1rem; --space-5:1.25rem; --space-6:1.5rem; --space-8:2rem; --space-10:2.5rem; --text-xs:.75rem;
-      --text-sm:.95rem; --text-base:1rem; --text-lg:1.2rem; --text-xl:1.8rem; --font-display:"Segoe UI","PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif; --font-body:"Segoe UI","PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
+    /* ===== DESIGN SYSTEM — Forest Green / Warm Paper / System Fonts / Mobile-first ===== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
     }
+
+    :root {
+      /* Forest green accent */
+      --green-900: #1a3a2e;
+      --green-700: #2d5a4a;
+      --green-600: #3a6e5a;
+      --green-500: #4a8c73;
+      --green-200: #d1e4db;
+      --green-100: #e8f2ed;
+      /* Warm paper background */
+      --warm-50: #faf8f5;
+      --warm-100: #f4f1ec;
+      --warm-150: #efe9e0;
+      --warm-200: #e2ddd4;
+      --warm-300: #c9c2b8;
+      /* Neutrals */
+      --gray-900: #1a1917;
+      --gray-800: #2c2926;
+      --gray-700: #3a3632;
+      --gray-600: #6b6560;
+      --gray-500: #9b9590;
+      --gray-400: #b5b0ab;
+      --gray-300: #d0ccc8;
+      --gray-200: #e2dfdb;
+      --gray-100: #f0eeec;
+      /* Surface */
+      --surface: #ffffff;
+      --surface-raised: #ffffff;
+      --surface-subtle: #faf8f5;
+      --surface-hover: #f4f1ec;
+      /* Functional */
+      --error: #c43a31;
+      --error-bg: #fef2f0;
+      --success: #1a7a4a;
+      /* Shadows */
+      --shadow-sm: 0 1px 3px rgba(26, 25, 23, 0.06);
+      --shadow-md: 0 4px 12px rgba(26, 25, 23, 0.07);
+      --shadow-lg: 0 8px 30px rgba(26, 25, 23, 0.08);
+      /* Radii */
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 18px;
+      /* Spacing */
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      /* Typography */
+      --font: -apple-system, "Segoe UI", "PingFang TC", "Microsoft JhengHei",
+        "Noto Sans TC", system-ui, sans-serif;
+      --text-xs: 0.75rem;
+      --text-sm: 0.875rem;
+      --text-base: 1rem;
+      --text-lg: 1.125rem;
+      --text-xl: 1.5rem;
+      --text-2xl: 2rem;
+      --text-3xl: 2.5rem;
+      /* Line heights */
+      --leading-tight: 1.15;
+      --leading-normal: 1.5;
+      /* Transitions */
+      --transition: 150ms ease;
+    }
+
+    /* Dark theme */
     [data-theme="dark"] {
-      --color-bg:#1a1917; --color-surface:#242322; --color-surface-2:#2a2928; --color-surface-offset:#2a2928;
-      --color-border:#3a3632; --color-divider:#3a3632; --color-text:#e8e4df; --color-text-muted:#9b9590; --color-text-faint:#6b6965;
-      --color-text-inverse:#ffffff; --color-primary:#4a8c73; --color-primary-hover:#3d7962; --color-primary-highlight:#2c3a35; --color-error:#c45b52;
-      --shadow-sm:0 2px 8px rgba(0,0,0,.25); --shadow-md:0 4px 24px rgba(0,0,0,.35);
+      --green-900: #4a8c73;
+      --green-700: #4a8c73;
+      --green-600: #5aa384;
+      --green-500: #6bb897;
+      --green-200: #2c3a35;
+      --green-100: #1e2a26;
+      --warm-50: #1e1d1b;
+      --warm-100: #1a1917;
+      --warm-150: #22211f;
+      --warm-200: #2e2d2a;
+      --warm-300: #3f3d38;
+      --gray-900: #f0eeec;
+      --gray-800: #e2dfdb;
+      --gray-700: #d0ccc8;
+      --gray-600: #b5b0ab;
+      --gray-500: #9b9590;
+      --gray-400: #6b6560;
+      --gray-300: #3a3632;
+      --gray-200: #2c2926;
+      --gray-100: #242321;
+      --surface: #242322;
+      --surface-raised: #2a2928;
+      --surface-subtle: #1e1d1b;
+      --surface-hover: #2e2d2a;
+      --error: #e06058;
+      --error-bg: #2e1a1a;
+      --success: #5abf8a;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.4);
     }
-    /* CSS-only dark mode: honor the OS setting like the rest of the suite. The JS
-       toggle below sets [data-theme] which overrides this; the media query keeps dark
-       mode reachable without JS and matches flooring-calculator / joist_calculater. */
+
+    /* OS-level dark mode (fallback, overridden by JS toggle) */
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
         color-scheme: dark;
-        --color-bg:#1a1917; --color-surface:#242322; --color-surface-2:#2a2928; --color-surface-offset:#2a2928;
-        --color-border:#3a3632; --color-divider:#3a3632; --color-text:#e8e4df; --color-text-muted:#9b9590; --color-text-faint:#6b6965;
-        --color-text-inverse:#ffffff; --color-primary:#4a8c73; --color-primary-hover:#3d7962; --color-primary-highlight:#2c3a35; --color-error:#c45b52;
-        --shadow-sm:0 2px 8px rgba(0,0,0,.25); --shadow-md:0 4px 24px rgba(0,0,0,.35);
+        --green-900: #4a8c73;
+        --green-700: #4a8c73;
+        --green-600: #5aa384;
+        --green-500: #6bb897;
+        --green-200: #2c3a35;
+        --green-100: #1e2a26;
+        --warm-50: #1e1d1b;
+        --warm-100: #1a1917;
+        --warm-150: #22211f;
+        --warm-200: #2e2d2a;
+        --warm-300: #3f3d38;
+        --gray-900: #f0eeec;
+        --gray-800: #e2dfdb;
+        --gray-700: #d0ccc8;
+        --gray-600: #b5b0ab;
+        --gray-500: #9b9590;
+        --gray-400: #6b6560;
+        --gray-300: #3a3632;
+        --gray-200: #2c2926;
+        --gray-100: #242321;
+        --surface: #242322;
+        --surface-raised: #2a2928;
+        --surface-subtle: #1e1d1b;
+        --surface-hover: #2e2d2a;
+        --error: #e06058;
+        --error-bg: #2e1a1a;
+        --success: #5abf8a;
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+        --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.4);
       }
     }
-    * { box-sizing: border-box; }
+
+    html {
+      font-size: 16px;
+      -webkit-text-size-adjust: 100%;
+    }
+
     body {
-      margin:0;
-      min-height:100vh;
-      font-family:var(--font-body);
-      background:var(--color-bg);
-      color:var(--color-text);
-      line-height:1.5;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: var(--warm-100);
+      color: var(--gray-800);
+      font-family: var(--font);
+      line-height: var(--leading-normal);
+      -webkit-font-smoothing: antialiased;
     }
-    button,input { font:inherit; }
 
+    /* ===== LAYOUT ===== */
     .app {
-      max-width:1180px;
-      margin:0 auto;
-      padding:var(--space-6);
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: var(--space-4);
     }
 
+    /* ===== TOP BAR ===== */
     .topbar {
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:var(--space-4);
-      margin-bottom:var(--space-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+      padding: var(--space-3) 0;
     }
-    .brand { display:flex; align-items:center; gap:var(--space-3); }
-    .logo {
-      width:42px; height:42px; border-radius:12px;
-      background:var(--color-surface);
-      border:1px solid var(--color-border);
-      display:grid; place-items:center;
-      box-shadow:var(--shadow-sm);
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
     }
-    .brand h1 {
-      margin:0;
-      font-family:var(--font-display);
-      font-size:var(--text-xl);
-      line-height:1;
-      font-weight:500;
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      border: 1px solid var(--warm-200);
+      display: grid;
+      place-items: center;
+      color: var(--green-700);
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
     }
-    .brand p {
-      margin:.3rem 0 0;
-      color:var(--color-text-muted);
-      font-size:var(--text-sm);
+
+    .brand-text h1 {
+      margin: 0;
+      font-size: var(--text-lg);
+      font-weight: 700;
+      line-height: var(--leading-tight);
+      color: var(--gray-800);
     }
+
+    .brand-text p {
+      margin: 2px 0 0;
+      font-size: var(--text-xs);
+      color: var(--gray-600);
+    }
+
     .theme-toggle {
-      min-width:44px;
-      min-height:44px;
-      border-radius:999px;
-      border:1px solid var(--color-border);
-      background:var(--color-surface);
-      color:var(--color-text);
-      display:grid;
-      place-items:center;
-      box-shadow:var(--shadow-sm);
-      cursor:pointer;
-      transition:background .2s ease, border-color .2s ease, transform .12s ease;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid var(--warm-200);
+      background: var(--surface);
+      color: var(--gray-600);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+      transition: background var(--transition), border-color var(--transition),
+        transform var(--transition);
     }
+
     .theme-toggle:hover {
-      background:var(--color-surface-offset);
-      border-color:var(--color-text-faint);
+      background: var(--surface-hover);
+      border-color: var(--warm-300);
     }
+
     .theme-toggle:active {
-      transform:scale(.97);
+      transform: scale(0.94);
     }
 
+    /* ===== HERO CARD ===== */
     .hero {
-      display:block;
-      margin-bottom:var(--space-6);
-    }
-
-    .hero-card,
-    .card {
-      background:var(--color-surface);
-      border:1px solid var(--color-border);
-      border-radius:var(--radius-xl);
-      box-shadow:var(--shadow-md);
+      margin-bottom: var(--space-6);
     }
 
     .hero-card {
-      padding:var(--space-8);
-      background:var(--color-surface);
+      background: var(--green-700);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8) var(--space-6);
+      box-shadow: var(--shadow-md);
+      color: #fff;
     }
+
     .hero-card h2 {
-      margin:0 0 var(--space-3);
-      font-family:var(--font-display);
-      font-size:clamp(2rem, 4vw, 3.2rem);
-      max-width:none;
-      line-height:1.02;
-      font-weight:500;
+      margin: 0 0 var(--space-3);
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 700;
+      line-height: var(--leading-tight);
     }
+
     .hero-card p {
-      margin:0;
-      max-width:72ch;
-      color:var(--color-text-muted);
-      font-size:var(--text-base);
+      margin: 0;
+      max-width: 64ch;
+      font-size: var(--text-sm);
+      opacity: 0.9;
+      line-height: var(--leading-normal);
     }
 
+    /* ===== CARD COMPONENT ===== */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--warm-200);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: var(--space-5);
+    }
+
+    .card-title {
+      margin: 0 0 var(--space-5);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--gray-800);
+      padding-bottom: var(--space-3);
+      border-bottom: 2px solid var(--green-200);
+    }
+
+    /* ===== APP GRID ===== */
     .app-grid {
-      display:grid;
-      grid-template-columns:minmax(320px,390px) 1fr;
-      gap:var(--space-5);
-      align-items:start;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+      align-items: start;
     }
 
-    .card { padding:var(--space-5); }
-    .card h3 {
-      margin:0 0 var(--space-4);
-      font-size:var(--text-lg);
+    /* ===== FORM ===== */
+    .field-grid {
+      display: grid;
+      gap: var(--space-4);
     }
 
-    .field-grid { display:grid; gap:var(--space-4); }
-    .field { display:grid; gap:.45rem; }
-    .field label { font-size:var(--text-sm); font-weight:600; }
-    .field small { color:var(--color-text-muted); font-size:var(--text-xs); }
-
-    .field input {
-      min-height:48px;
-      border-radius:var(--radius-md);
-      border:1px solid var(--color-border);
-      background:var(--color-surface-2);
-      padding:0 .9rem;
-      color:var(--color-text);
+    .field {
+      display: grid;
+      gap: var(--space-1);
     }
-    .field input[type="checkbox"] {
-      width:auto;
-      height:auto;
-      margin-right:.5rem;
-      min-height:auto;
-      padding:0;
+
+    .field-label {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--gray-700);
+    }
+
+    .field-hint {
+      font-size: var(--text-xs);
+      color: var(--gray-500);
+      margin: 0;
+    }
+
+    .checkbox-field {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-3) 0;
+    }
+
+    .checkbox-field input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--green-700);
+      cursor: pointer;
+      flex-shrink: 0;
+      margin: 0;
+    }
+
+    .checkbox-field label {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--gray-700);
+      cursor: pointer;
+      user-select: none;
     }
 
     .number-inline {
-      display:grid;
-      grid-template-columns:64px 1fr 64px;
-      gap:.5rem;
-      align-items:center;
+      display: grid;
+      grid-template-columns: 56px 1fr 56px;
+      gap: var(--space-2);
+      align-items: center;
     }
+
     .number-inline button {
-      min-width:64px;
-      min-height:44px;
-      border-radius:999px;
-      border:1px solid var(--color-border);
-      background:var(--color-surface-2);
-      color:var(--color-text);
-      transition:background .2s ease, border-color .2s ease, transform .12s ease;
+      min-height: 48px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--warm-200);
+      background: var(--surface-subtle);
+      color: var(--gray-700);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background var(--transition), border-color var(--transition),
+        transform var(--transition);
+      padding: 0;
+      display: grid;
+      place-items: center;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
+
     .number-inline button:hover {
-      background:var(--color-surface-offset);
-      border-color:var(--color-text-faint);
+      background: var(--surface-hover);
+      border-color: var(--warm-300);
     }
+
     .number-inline button:active {
-      transform:scale(.98);
+      transform: scale(0.96);
+      background: var(--warm-200);
     }
-    .number-inline input { flex:1; }
 
+    .number-inline input {
+      min-height: 48px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--warm-200);
+      background: var(--surface);
+      color: var(--gray-800);
+      font-size: var(--text-base);
+      font-weight: 600;
+      padding: 0 var(--space-3);
+      text-align: center;
+      width: 100%;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      -moz-appearance: textfield;
+    }
+
+    .number-inline input::-webkit-inner-spin-button,
+    .number-inline input::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .number-inline input:focus {
+      outline: none;
+      border-color: var(--green-600);
+      box-shadow: 0 0 0 3px rgba(58, 110, 90, 0.15);
+    }
+
+    /* ===== BUTTONS ===== */
     .btn-row {
-      display:flex;
-      gap:var(--space-3);
-      margin-top:var(--space-3);
-      flex-wrap:wrap;
+      display: flex;
+      gap: var(--space-3);
+      margin-top: var(--space-3);
+      flex-wrap: wrap;
     }
+
     .btn {
-      min-height:48px;
-      padding:0 1rem;
-      border-radius:999px;
-      border:1px solid transparent;
-      font-weight:600;
+      min-height: 48px;
+      padding: 0 var(--space-6);
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: var(--text-base);
+      font-weight: 700;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition),
+        box-shadow var(--transition);
+      -webkit-tap-highlight-color: transparent;
+      flex: 1;
+      text-align: center;
     }
-    .btn-primary { background:var(--color-primary); color:var(--color-text-inverse); }
-    .btn-primary:hover { background:var(--color-primary-hover); }
+
+    .btn-primary {
+      background: var(--green-700);
+      color: #fff;
+      border-color: var(--green-700);
+    }
+
+    .btn-primary:hover {
+      background: var(--green-900);
+      border-color: var(--green-900);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.97);
+    }
+
     .btn-secondary {
-      background:var(--color-surface-2);
-      border-color:var(--color-border);
-      color:var(--color-text);
+      background: var(--surface);
+      color: var(--gray-700);
+      border-color: var(--warm-200);
     }
 
+    .btn-secondary:hover {
+      background: var(--surface-hover);
+      border-color: var(--warm-300);
+    }
+
+    .btn-secondary:active {
+      transform: scale(0.97);
+    }
+
+    /* ===== MESSAGE ===== */
     .message {
-      min-height:24px;
-      font-size:var(--text-sm);
-      margin-top:var(--space-3);
-      color:var(--color-error);
+      min-height: 0;
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--error);
+      padding: var(--space-2) 0;
+      line-height: var(--leading-tight);
     }
 
+    /* ===== RESULTS ===== */
     .results {
-      display:grid;
-      gap:var(--space-4);
+      display: grid;
+      gap: var(--space-4);
     }
+
     .result-group {
-      border:1px solid var(--color-border);
-      border-radius:var(--radius-lg);
-      overflow:hidden;
-      background:var(--color-surface-2);
+      border: 1px solid var(--warm-200);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--surface);
     }
-    .result-group header {
-      padding:var(--space-3) var(--space-5);
-      border-bottom:1px solid var(--color-divider);
-      font-weight:700;
+
+    .result-group-header {
+      padding: var(--space-3) var(--space-4);
+      background: var(--green-100);
+      font-weight: 700;
+      font-size: var(--text-sm);
+      color: var(--green-700);
+      border-bottom: 1px solid var(--green-200);
     }
-    .result-list { display:grid; }
-    .row {
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:var(--space-4);
-      padding:.9rem var(--space-5);
-      border-bottom:1px solid var(--color-divider);
+
+    .result-list {
+      display: grid;
     }
-    .row:last-child { border-bottom:none; }
-    .row span { color:var(--color-text-muted); }
-    .row strong {
-      font-variant-numeric:tabular-nums;
-      text-align:right;
-      font-size:1.15rem;
-      font-weight:700;
-      color:var(--color-text);
+
+    .result-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--warm-200);
+      align-items: center;
     }
-    .highlight { background:var(--color-primary-highlight); }
+
+    .result-row:last-child {
+      border-bottom: none;
+    }
+
+    .result-row span {
+      font-size: var(--text-sm);
+      color: var(--gray-600);
+    }
+
+    .result-row strong {
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--gray-800);
+      white-space: nowrap;
+    }
+
+    .result-row.highlight {
+      background: var(--green-100);
+    }
+
+    .result-row.highlight strong {
+      color: var(--green-700);
+    }
 
     .footer-note {
-      margin-top:var(--space-4);
-      color:var(--color-text-muted);
-      font-size:var(--text-sm);
+      margin-top: var(--space-4);
+      color: var(--gray-500);
+      font-size: var(--text-xs);
+      line-height: var(--leading-normal);
+      padding: var(--space-3) var(--space-4);
+      background: var(--surface-subtle);
+      border-radius: var(--radius-sm);
     }
 
-    @media (max-width: 960px) {
-      .app-grid { grid-template-columns:1fr; }
-      .hero-card h2 { max-width:none; }
-      .app { padding:var(--space-4); }
+    /* ===== RESPONSIVE ===== */
+    @media (min-width: 600px) {
+      .app-grid {
+        grid-template-columns: minmax(320px, 400px) 1fr;
+      }
+
+      .app {
+        padding: var(--space-6);
+      }
+
+      .btn-row {
+        flex-wrap: nowrap;
+      }
+
+      .btn {
+        flex: initial;
+        min-width: 120px;
+      }
     }
 
-    @media (max-width: 768px) {
-      .number-inline { grid-template-columns:56px 1fr 56px; }
-      .btn-row { justify-content:stretch; }
-      .btn { flex:1; text-align:center; }
-      .hero-card,
-      .card { border-radius:var(--radius-lg); }
-      .hero-card { padding:var(--space-6); }
-      .card { padding:var(--space-4); }
-      .row { padding:.85rem 1rem; }
+    @media (min-width: 900px) {
+      .app {
+        padding: var(--space-8);
+      }
+
+      .hero-card {
+        padding: var(--space-10) var(--space-8);
+      }
+
+      .hero-card h2 {
+        font-size: var(--text-3xl);
+      }
+
+      .card {
+        padding: var(--space-6);
+      }
+    }
+
+    /* ===== REDUCED MOTION ===== */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+
+    /* ===== ACCESSIBILITY ===== */
+    @media (forced-colors: active) {
+      .btn {
+        border: 2px solid ButtonText;
+      }
+      .result-group {
+        border: 1px solid ButtonText;
+      }
     }
   </style>
 </head>
@@ -277,106 +604,109 @@
   <div class="app">
     <header class="topbar">
       <div class="brand">
-        <div class="logo" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-label="Flooring calculator logo">
-            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-            <path d="M8 5v14M14 5v14M3 10h18M3 14h18"></path>
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="14" rx="2" />
+            <path d="M8 5v14M14 5v14M3 10h18M3 14h18" />
           </svg>
         </div>
-        <div>
-          <h1>Flooring MVP</h1>
-          <p>戶外木地板 + 面通材料計算器</p>
+        <div class="brand-text">
+          <h1>戶外木地板計算器</h1>
+          <p>地板 + 面通 + 底通 + 鋁角</p>
         </div>
       </div>
-      <button class="theme-toggle" data-theme-toggle aria-label="Switch theme"></button>
+      <button class="theme-toggle" data-theme-toggle aria-label="切換深色/淺色模式" title="切換主題"></button>
     </header>
 
     <section class="hero">
       <article class="hero-card">
-        <h2>地板數量與面通數量一齊計</h2>
-        <p>此版本移除損耗率輸入，集中做好 MVP 核心：按最大等分規則計地板分段、總板數、面積對比，再加上面通、底通與鋁角。</p>
+        <h2>地板數量與面通材料一齊計</h2>
+        <p>按最大等分規則計地板分段、總板數、面積對比，再加上面通、底通與鋁角。適合戶外木地板工程現場快速估算。</p>
       </article>
     </section>
 
     <main class="app-grid">
+      <!-- ===== INPUT SECTION ===== -->
       <section class="card" aria-labelledby="input-title">
-        <h3 id="input-title">輸入資料</h3>
-        <form id="calcForm" class="field-grid">
+        <h3 class="card-title" id="input-title">輸入資料</h3>
+        <form id="calcForm" class="field-grid" novalidate>
 
           <div class="field">
-            <label for="spaceLength">空間長度（毫米）</label>
+            <label class="field-label" for="spaceLength">空間長度（mm）</label>
             <div class="number-inline">
-              <button type="button" data-target="spaceLength" data-step="-100">-100</button>
-              <input id="spaceLength" type="number" value="5000" min="1" required>
+              <button type="button" data-target="spaceLength" data-step="-100">−100</button>
+              <input id="spaceLength" type="number" value="5000" min="1" required />
               <button type="button" data-target="spaceLength" data-step="100">+100</button>
             </div>
           </div>
 
           <div class="field">
-            <label for="spaceWidth">空間闊度（毫米）</label>
+            <label class="field-label" for="spaceWidth">空間闊度（mm）</label>
             <div class="number-inline">
-              <button type="button" data-target="spaceWidth" data-step="-100">-100</button>
-              <input id="spaceWidth" type="number" value="3000" min="1" required>
+              <button type="button" data-target="spaceWidth" data-step="-100">−100</button>
+              <input id="spaceWidth" type="number" value="3000" min="1" required />
               <button type="button" data-target="spaceWidth" data-step="100">+100</button>
             </div>
           </div>
 
           <div class="field">
-            <label for="boardLength">地板長度（毫米）</label>
+            <label class="field-label" for="boardLength">地板長度（mm）</label>
             <div class="number-inline">
-              <button type="button" data-target="boardLength" data-step="-50">-50</button>
-              <input id="boardLength" type="number" value="2000" min="1" required>
+              <button type="button" data-target="boardLength" data-step="-50">−50</button>
+              <input id="boardLength" type="number" value="2000" min="1" required />
               <button type="button" data-target="boardLength" data-step="50">+50</button>
             </div>
           </div>
 
           <div class="field">
-            <label for="boardWidth">地板闊度（毫米）</label>
+            <label class="field-label" for="boardWidth">地板闊度（mm）</label>
             <div class="number-inline">
-              <button type="button" data-target="boardWidth" data-step="-10">-10</button>
-              <input id="boardWidth" type="number" value="140" min="1" required>
+              <button type="button" data-target="boardWidth" data-step="-10">−10</button>
+              <input id="boardWidth" type="number" value="140" min="1" required />
               <button type="button" data-target="boardWidth" data-step="10">+10</button>
             </div>
           </div>
 
           <div class="field">
-            <label for="maxSegmentLength">最大等分規則（毫米）</label>
+            <label class="field-label" for="maxSegmentLength">最大等分規則（mm）</label>
             <div class="number-inline">
-              <button type="button" data-target="maxSegmentLength" data-step="-50">-50</button>
-              <input id="maxSegmentLength" type="number" value="400" min="1" required>
+              <button type="button" data-target="maxSegmentLength" data-step="-50">−50</button>
+              <input id="maxSegmentLength" type="number" value="400" min="1" required />
               <button type="button" data-target="maxSegmentLength" data-step="50">+50</button>
             </div>
-            <small>每個等分不可超過此數值。</small>
+            <p class="field-hint">每個等分不可超過此數值。</p>
           </div>
 
           <div class="field">
-            <label for="battenLength">每枝面通長度（毫米）</label>
+            <label class="field-label" for="battenLength">每枝面通長度（mm）</label>
             <div class="number-inline">
-              <button type="button" data-target="battenLength" data-step="-100">-100</button>
-              <input id="battenLength" type="number" value="2000" min="1" required>
+              <button type="button" data-target="battenLength" data-step="-100">−100</button>
+              <input id="battenLength" type="number" value="2000" min="1" required />
               <button type="button" data-target="battenLength" data-step="100">+100</button>
             </div>
-            <small>用於計算總面通長度需要多少支面通。</small>
+            <p class="field-hint">用於計算總面通長度需要多少支面通。</p>
           </div>
 
-          <div class="field">
-            <label><input id="bottomBattenEnabled" type="checkbox"> 啟用底通</label>
-            <small>勾選後顯示底通行數、底通總長度與底通支數。</small>
+          <div class="checkbox-field">
+            <input id="bottomBattenEnabled" type="checkbox" />
+            <label for="bottomBattenEnabled">啟用底通</label>
           </div>
+          <p class="field-hint" style="margin-top: -8px;">勾選後顯示底通行數、底通總長度與底通支數。</p>
+
+          <div class="checkbox-field">
+            <input id="aluminumEnabled" type="checkbox" />
+            <label for="aluminumEnabled">啟用鋁角</label>
+          </div>
+          <p class="field-hint" style="margin-top: -8px;">勾選後才計算鋁角總長度。</p>
 
           <div class="field">
-            <label><input id="aluminumEnabled" type="checkbox"> 啟用鋁角</label>
-            <small>勾選後才計算鋁角總長度。</small>
-          </div>
-
-          <div class="field">
-            <label for="aluminumHeight">鋁角高度（毫米）</label>
+            <label class="field-label" for="aluminumHeight">鋁角高度（mm）</label>
             <div class="number-inline">
-              <button type="button" data-target="aluminumHeight" data-step="-10">-10</button>
-              <input id="aluminumHeight" type="number" value="50" min="1">
+              <button type="button" data-target="aluminumHeight" data-step="-10">−10</button>
+              <input id="aluminumHeight" type="number" value="50" min="1" />
               <button type="button" data-target="aluminumHeight" data-step="10">+10</button>
             </div>
-            <small>僅在啟用鋁角時使用。</small>
+            <p class="field-hint">僅在啟用鋁角時使用。</p>
           </div>
 
           <div class="btn-row">
@@ -387,55 +717,58 @@
         </form>
       </section>
 
+      <!-- ===== RESULTS SECTION ===== -->
       <section class="card" aria-labelledby="result-title">
-        <h3 id="result-title">計算結果</h3>
+        <h3 class="card-title" id="result-title">計算結果</h3>
         <div class="results">
-          <section class="result-group">
-            <header>地板結構結果</header>
-            <div class="result-list">
-              <div class="row"><span>每板等分數</span><strong id="segmentPerBoard">-</strong></div>
-              <div class="row"><span>每段實際長度</span><strong id="segmentLength">-</strong></div>
-              <div class="row"><span>每行需要等分數</span><strong id="segmentsPerRow">-</strong></div>
-              <div class="row"><span>總行數</span><strong id="totalRows">-</strong></div>
-              <div class="row"><span>總等分數</span><strong id="totalSegments">-</strong></div>
-              <div class="row highlight"><span>總地板件數</span><strong id="totalBoards">-</strong></div>
-            </div>
-          </section>
 
-          <section class="result-group">
-            <header>面積對比</header>
+          <div class="result-group">
+            <div class="result-group-header">地板結構</div>
             <div class="result-list">
-              <div class="row"><span>空間總面積</span><strong id="spaceArea">-</strong></div>
-              <div class="row"><span>單件地板面積</span><strong id="boardArea">-</strong></div>
-              <div class="row"><span>總地板面積</span><strong id="totalBoardArea">-</strong></div>
-              <div class="row highlight"><span>面積差</span><strong id="areaDifference">-</strong></div>
+              <div class="result-row"><span>每板等分數</span><strong id="segmentPerBoard">-</strong></div>
+              <div class="result-row"><span>每段實際長度</span><strong id="segmentLength">-</strong></div>
+              <div class="result-row"><span>每行需要等分數</span><strong id="segmentsPerRow">-</strong></div>
+              <div class="result-row"><span>總行數</span><strong id="totalRows">-</strong></div>
+              <div class="result-row"><span>總等分數</span><strong id="totalSegments">-</strong></div>
+              <div class="result-row highlight"><span>總地板件數</span><strong id="totalBoards">-</strong></div>
             </div>
-          </section>
+          </div>
 
-          <section class="result-group">
-            <header>面通數量</header>
+          <div class="result-group">
+            <div class="result-group-header">面積對比</div>
             <div class="result-list">
-              <div class="row"><span>面通行數</span><strong id="battenRows">-</strong></div>
-              <div class="row"><span>面通總長度</span><strong id="totalBattenLength">-</strong></div>
-              <div class="row highlight"><span>所需面通支數</span><strong id="totalBattens">-</strong></div>
+              <div class="result-row"><span>空間總面積</span><strong id="spaceArea">-</strong></div>
+              <div class="result-row"><span>單件地板面積</span><strong id="boardArea">-</strong></div>
+              <div class="result-row"><span>總地板面積</span><strong id="totalBoardArea">-</strong></div>
+              <div class="result-row highlight"><span>面積差</span><strong id="areaDifference">-</strong></div>
             </div>
-          </section>
+          </div>
 
-          <section class="result-group">
-            <header>底通</header>
+          <div class="result-group">
+            <div class="result-group-header">面通數量</div>
             <div class="result-list">
-              <div class="row"><span>底通行數</span><strong id="bottomBattenRows">-</strong></div>
-              <div class="row"><span>底通總長度</span><strong id="bottomBattenLength">-</strong></div>
-              <div class="row highlight"><span>底通支數</span><strong id="bottomBattens">-</strong></div>
+              <div class="result-row"><span>面通行數</span><strong id="battenRows">-</strong></div>
+              <div class="result-row"><span>面通總長度</span><strong id="totalBattenLength">-</strong></div>
+              <div class="result-row highlight"><span>所需面通支數</span><strong id="totalBattens">-</strong></div>
             </div>
-          </section>
+          </div>
 
-          <section class="result-group">
-            <header>鋁角</header>
+          <div class="result-group">
+            <div class="result-group-header">底通</div>
             <div class="result-list">
-              <div class="row highlight"><span>鋁角總長度</span><strong id="aluminumLength">-</strong></div>
+              <div class="result-row"><span>底通行數</span><strong id="bottomBattenRows">-</strong></div>
+              <div class="result-row"><span>底通總長度</span><strong id="bottomBattenLength">-</strong></div>
+              <div class="result-row highlight"><span>底通支數</span><strong id="bottomBattens">-</strong></div>
             </div>
-          </section>
+          </div>
+
+          <div class="result-group">
+            <div class="result-group-header">鋁角</div>
+            <div class="result-list">
+              <div class="result-row highlight"><span>鋁角總長度</span><strong id="aluminumLength">-</strong></div>
+            </div>
+          </div>
+
         </div>
         <p class="footer-note">
           面通計算：地板每行等分數 + 1 = 面通行數；面通行數 × 空間闊度 = 面通總長度；面通總長度 ÷ 每枝面通長度後向上取整 = 所需面通支數。
