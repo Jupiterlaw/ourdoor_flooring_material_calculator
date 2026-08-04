@@ -271,6 +271,84 @@
       .card { padding:var(--space-4); }
       .row { padding:.85rem 1rem; }
     }
+
+    @media print {
+      /* Hide interactive elements */
+      .btn, .btn-primary, .btn-ghost,
+      button, input[type="button"], input[type="submit"],
+      .theme-toggle, .stepper-btn {
+        display: none !important;
+      }
+
+      /* White backgrounds, no shadows */
+      body, .app, .card, .hero-card, .result-card,
+      .result-list, .row {
+        background: #fff !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Single-column layout for print */
+      .app-grid, .field-grid, .results-grid {
+        display: block !important;
+      }
+
+      /* Table formatting */
+      table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+      }
+      th, td {
+        border: 1px solid #999 !important;
+        padding: 4px 6px !important;
+      }
+      th {
+        background: #f0f0f0 !important;
+        font-weight: bold !important;
+        color: #000 !important;
+      }
+
+      /* Headers */
+      .card-title, .brand h1 {
+        color: #000 !important;
+        border-bottom: 1px solid #ccc !important;
+      }
+
+      /* Result highlights */
+      .row.highlight {
+        background: #eee !important;
+        color: #000 !important;
+        border-color: #ccc !important;
+      }
+
+      /* Numeric readouts */
+      .row strong, .result-card .result-value {
+        color: #000 !important;
+      }
+
+      /* Hide non-essential */
+      .footer-note, .formula, .hint, .brand, .topbar {
+        display: none !important;
+      }
+
+      /* Show inputs as text for reference */
+      input[type="number"] {
+        border: none !important;
+        padding: 0 !important;
+        background: transparent !important;
+      }
+
+      /* Page-break control */
+      .card, .result-card {
+        page-break-inside: avoid !important;
+        margin-bottom: 0.5cm !important;
+      }
+    }
   </style>
 </head>
 <body>
